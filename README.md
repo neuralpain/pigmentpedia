@@ -1,6 +1,6 @@
 # palette 0.1.0
 
-palette is a library package which adds more predefined colors to Typst. Most of these colors are commonly used on the web.
+An extended color library for Typst. Most of these colors are commonly used on the web.
 
 ## Usage
 
