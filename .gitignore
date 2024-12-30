@@ -1,1 +1,9 @@
 .DS_Store
+
+test.typ
+*.test.typ
+
+*.pdf
+*.url
+*.bak
+*.csv
