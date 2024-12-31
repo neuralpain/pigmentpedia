@@ -55,7 +55,7 @@ DIC
 ├── TC-France
 └── TC-China
 
-RAL
+RAL (RAL Classic named colors)
 └── .
 
 RAL-Classic

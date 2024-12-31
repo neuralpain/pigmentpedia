@@ -7,7 +7,7 @@ An extended color library for Typst.
 ## Quick Start
 
 ```typ
-// sample document to familiarize yourself with pigmentpedia
+// a sample document to familiarize yourself with pigmentpedia
 
 #import "@preview/pigmentpedia:0.2.0": *
 
@@ -94,8 +94,10 @@ There are a lot of colors included within pigmentpedia and it would be a hassle 
 #view-pigments(Zhongguo.en.Blue)
 ```
 
+<!--
 > [!TIP]
 > If you're unfamiliar with the standards or pigments here in pigmentpedia, I would recommend viewing the pigment groups to discover their names.
+-->
 
 ### View a specific pigment from pigmentpedia
 
@@ -165,7 +167,7 @@ You can also search within a `scope` of pigments to narrow down your results.
   - HKS-K (Coated)
   - HKS-N (Uncoated)
   - HKS-Z (Special)
-- ISCC-NBS
+- ISCC–NBS System of Color Designation
 - Nippon Paint Colors
 
 ### Other pigments
@@ -184,7 +186,6 @@ If a group contains a `"."`, it means that some or all pigments can be accessed 
 
 Use `show-pigmentpedia-tree()` to view this information within your document.
 
-> [!NOTE]
 > CSS contains basic colors and can be used normally by referencing the color name `red`, `chocolate`, `rebeccapurple` etc., without having to reference the group (similar to HTML). However, you can still access it within `view-pigments()`, `find-pigment()` etc.
 >
 > **This is only for CSS.**
@@ -193,9 +194,9 @@ Use `show-pigmentpedia-tree()` to view this information within your document.
 > #pigment(firebrick)[This text has CSS firebrick color.]
 > ```
 
-```
-pigmentpedia displayed as ASCII tree
+### pigmentpedia displayed as ASCII tree
 
+```
 CSS
 └── .
 
@@ -239,7 +240,7 @@ DIC
 ├── TC-France
 └── TC-China
 
-RAL
+RAL (RAL Classic named colors)
 └── .
 
 RAL-Classic
@@ -312,7 +313,6 @@ Crayola
 ├── Standard
 │   └── Metallic
 └── Fluorescent
-
 ```
 
 # License
