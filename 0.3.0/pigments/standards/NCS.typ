@@ -1,7 +1,9 @@
-// Natural Colour System®
-// A universal language for colour communication.
-// Rooted in scientific precision
-// https://ncscolour.com/pages/the-system
+/*
+  Natural Colour System®
+  A universal language for colour communication.
+  Rooted in scientific precision.
+  https://ncscolour.com/pages/the-system
+*/
 
 #let NCS = (
   "S-0300-N": rgb("#F6F5F2"),

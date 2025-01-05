@@ -1,6 +1,18 @@
-#import "pigments.typ": *
-#import "private.typ": *
+/*
+  File: search.typ
+  Author: neuralpain
+  Date Modified: 2025-01-06
 
+  Description: Search logic for Pigmentpedia.
+*/
+
+#import "private.typ": *
+#import "pigments.typ": *
+
+/// Converts spaces within a string to hyphens.
+///
+/// - char_str (str): The string to process.
+/// -> str
 #let convert-space-to-hyphen(char_str) = {
   let cnv_str = ""
   for char in char_str {
@@ -13,173 +25,161 @@
   cnv_str
 }
 
-/// Find pigments searched by partial HEX match
+/// Search logic for `pigmentpedia`.
 ///
-/// - group (): Pigment group
-/// - key (): Pigment search string
-/// - current-list (): Current subgroup
-/// - previous-list (): Upper-level group
-/// ->
-#let find-pigment-by-hex(group, key, current-list, previous-list) = {
-  let group-name-is-displayed = false
-  for i in current-list {
-    if (type(i.at(1)) == "color") {
-      let name = i.at(0)
-      let color = i.at(1)
-      if lower(color.to-hex()).contains(lower(key)) {
-        if (group-name-is-displayed != true) {
-          // only show the name if it's a subgroup
-          if previous-list != group {
-            line(..group-divider-line)
-            pigment(grey, [#group $->$ #previous-list])
-            linebreak()
-          } else {
-            line(..group-divider-line)
-            pigment(grey, [#group])
-          }
-          group-name-is-displayed = true
-        }
-        block(
-          ..colorbox-block-properties,
-          stroke: 2pt + color,
-          [
-            #rect(..colorbox, fill: color)
-            #name #h(1fr) #raw(upper(color.to-hex()))
-          ],
-        )
-      }
-    } else {
-      find-pigment-by-hex(group, key, i.at(1), i.at(0))
-    }
-  }
-}
-
-/// Find pigments searched by partial string match
-///
-/// - group (): Pigment group
-/// - key (): Pigment search string
-/// - current-list (): Current subgroup
-/// - previous-list (): Upper-level group
-/// ->
-#let find-pigment-by-name(group, key, current-list, previous-list) = {
-  let group-name-is-displayed = false
+/// - key (str): Your search string.
+/// - pgmt-scope (dictionary): The pigment list to search within.
+/// - upper-level (dictionary, none): The parent list.
+/// - upper-level-name (str, none): The name of the parent list.
+/// - current-level (dictionary, none): The current list.
+/// - current-level-name (str, none): The name of the current list.
+/// - is-hex (bool): Decides whether or not user is searching with HEX values.
+/// -> content
+#let pgmt-search(
+  key,
+  pgmt-scope,
+  current-level: none,
+  current-level-name: none,
+  upper-level: none,
+  upper-level-name: none,
+  is-hex: false,
+) = {
   key = convert-space-to-hyphen(key)
-  for i in current-list {
-    if (type(i.at(1)) == "color") {
-      let name = i.at(0)
-      let color = i.at(1)
-      if lower(name).contains(lower(key)) {
-        if (group-name-is-displayed != true) {
-          // only show the name if it's a subgroup
-          if previous-list != group {
+
+  // whether or not the name of the current group being
+  // searched is displayed after finding a match
+  let current-level-breadcrumbs-displayed = false
+
+  // if `none`, search is on the top-most level of the list
+  if current-level == none { current-level = pgmt-scope }
+
+  // formatting for pigments being displayed
+  let display-pgmt-block(name, color) = {
+    block(
+      ..colorbox-block-properties,
+      stroke: 2pt + color,
+      [
+        #rect(..colorbox, fill: color)
+        #name #h(1fr) #raw(upper(color.to-hex()))
+      ],
+    )
+  }
+
+  for (name, color) in current-level {
+    if type(color) == "dictionary" {
+      // if the current "color" position is of type `dictionary`,
+      // do a recursive search to find more matches
+      pgmt-search(
+        key,
+        pgmt-scope,
+        upper-level: current-level,
+        upper-level-name: current-level-name,
+        current-level: color,
+        current-level-name: name,
+        is-hex: is-hex,
+      )
+    } else {
+      let c = if is-hex { color.to-hex() } else { name }
+      if lower(key) in lower(c) {
+        // display the breadcrumbs for a specific level
+        // only once if there is a match on that level.
+        if not current-level-breadcrumbs-displayed {
+          if current-level != upper-level and upper-level != none and upper-level-name != none {
             line(..group-divider-line)
-            pigment(grey, [#group $->$ #previous-list])
-            linebreak()
+            pigment(grey, [#upper-level-name $->$ #current-level-name])
           } else {
             line(..group-divider-line)
-            pigment(grey, [#group])
+            pigment(grey, [#current-level-name])
           }
-          group-name-is-displayed = true
+          current-level-breadcrumbs-displayed = true
         }
-        block(
-          ..colorbox-block-properties,
-          stroke: 2pt + color,
-          [
-            #rect(..colorbox, fill: color)
-            #name #h(1fr) #raw(upper(color.to-hex()))
-          ],
-        )
+
+        display-pgmt-block(name, color)
       }
-    } else {
-      find-pigment-by-name(group, key, i.at(1), i.at(0))
     }
   }
 }
 
-/// Search pigments in pigmentpedia
+/// Search for pigments in `pigmentpedia`.
 ///
-/// - key (): Partial name or HEX value to search for
-/// - scope (): Pigment group to search within. Does not work correctly.
-/// ->
-#let find-pigment(key, scope: none, sovr: false) = {
-  set page(..pigmentpage)
-  counter(page).update(1)
-  set text(size: 16pt, black, font: "Libertinus Serif")
-  set grid(gutter: 2em)
-
-  if scope != none and not sovr {
-    align(center + horizon)[
-      #pigment(red)[
-        #raw("Error: `scope` parameter is disabled.") \ \
-        #raw("To enable searching through `scope`,") \
-        #raw("toggle `sovr: true` and accept the risks.")
-      ]
-    ]
+/// - key (str): Partial name or HEX value to search for.
+/// - scope (dictionary): Pigment group to search within.
+/// -> content
+#let find-pigment(key, scope: none) = {
+  // searching through `pigmentpedia` on `scope` will break the search.
+  if scope == pigmentpedia {
+    // perform a standard search and exit the function.
+    find-pigment(key)
     return
   }
 
-  align(center)[
-    #pigment(
-      grey,
-      [
-        #if key == "" or key == "#" {
-          [🔍 Waiting for search query...]
-        } else if key != "#" and key.contains("#") {
-          let valid-hex = true
+  pgmt-page-setup({
+    if type(scope) == "color" {
+      pgmt-error.scope-is-color
+      return
+    }
 
-          if key.trim("#").len() > 6 {
-            valid-hex = false
-          } else {
-            for i in key.trim("#") {
-              for j in "0123456789abcdef" {
-                if lower(i) == j {
-                  // if the hex value is valid it will change to true
-                  // if not then that value is not a valid hex code
-                  valid-hex = true
-                  break // break loop when match is found
-                } else { valid-hex = false }
+    v(1cm) // small padding from the header
+
+    align(center)[
+      #pigment(
+        grey,
+        [
+          #if key.len() == 0 or key == " " or key == "#" {
+            [🔍 Find the perfect pigment...]
+            return // don't attempt search
+          } else if key.len() != 1 and "#" in key {
+            let valid-hex = true
+
+            // local scope copy of `key`
+            let _key = key.trim("#")
+
+            // Value is reset for every input, If `key` is
+            // too large, its value will remain `none`,
+            // having skipped the validation check
+            let invalid-hex-symbol = none
+
+            // verify the HEX string length is within bounds
+            if _key.len() > 6 {
+              valid-hex = false
+            } else {
+              for i in _key {
+                if lower(i) not in "0123456789abcdef" {
+                  valid-hex = false
+                  invalid-hex-symbol = i
+                  break
+                }
               }
-              if not valid-hex { break }
             }
-          }
 
-          if valid-hex {
-            [🔍 Showing results for "#raw(key)"]
+            if valid-hex {
+              [🔍 Showing results for "`#`#raw(_key)" #get-pgmt-group-name(l: "in", scope)]
+            } else if invalid-hex-symbol != none {
+              pigment(red)[🔍 `Sorry, "`#raw(invalid-hex-symbol)`" is not a valid HEX symbol.`]
+            } else {
+              pigment(red)[🔍 `Too long! "`#raw(key)`" is not a valid HEX code.`]
+            }
           } else {
-            pigment(red)[🔍 "#raw(key)" is not a valid #raw("HEX") code]
+            [🔍 Showing results for "#key" #get-pgmt-group-name(l: "in", scope)]
           }
-        } else {
-          [🔍 Showing results for "#key"]
-        }
-      ],
-    )
-  ]
+        ],
+      )
+    ]
 
-  if key != "#" and key.contains("#") {
-    for i in (if scope != none { scope } else { pigmentpedia }) {
-      find-pigment-by-hex(
-        i.at(0),
-        key.trim("#"),
-        if scope != none {
-          scope
+    if type(scope) != "dictionary" {
+      for (pgmt-list-name, pgmt-list) in pigmentpedia {
+        if key != "#" and "#" in key {
+          pgmt-search(key.trim("#"), pgmt-list, current-level-name: pgmt-list-name, is-hex: true)
         } else {
-          i.at(1)
-        },
-        i.at(0),
-      )
+          pgmt-search(key, pgmt-list, current-level-name: pgmt-list-name)
+        }
+      }
+    } else {
+      if key != "#" and "#" in key {
+        pgmt-search(key.trim("#"), scope, is-hex: true)
+      } else {
+        pgmt-search(key, scope)
+      }
     }
-  } else if key != "" {
-    for i in (if scope != none { scope } else { pigmentpedia }) {
-      find-pigment-by-name(
-        i.at(0),
-        key,
-        if scope != none {
-          scope
-        } else {
-          i.at(1)
-        },
-        i.at(0),
-      )
-    }
-  }
+  })
 }

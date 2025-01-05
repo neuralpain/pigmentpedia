@@ -139,7 +139,7 @@ Used for numbers.
 
 
 
-#let NordTheme = (
+#let Nord = (
   "Polar-Night-1": nord0,
   "Polar-Night-2": nord1,
   "Polar-Night-3": nord2,

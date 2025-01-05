@@ -1,31 +1,35 @@
+/*
+                  http://tx4.us/nbs-iscc.htm
+                    NBS/ISCC Color System
 
-//                       http://tx4.us/nbs-iscc.htm
-//                         NBS/ISCC Color System
+  Copyright 2003 Voluntocracy.  Permission is granted to
+  copy and distribute modified or unmodified versions of
+  this color dictionary provided the copyright notice and
+  this permission notice are preserved on all copies and
+  the entire such work is distributed under the terms of a
+  permission notice identical to this one.
 
-// Copyright 2003 Voluntocracy.  Permission is granted to copy and
-// distribute modified or unmodified versions of this color dictionary
-// provided the copyright notice and this permission notice are preserved
-// on all copies and the entire such work is distributed under the terms
-// of a permission notice identical to this one.
+  "Pink" and "brown" are used instead of the more logical
+  "pale red" and "dark orange".
 
-// "Pink" and "brown" are used instead of the more logical "pale red" and
-// "dark orange".
+  http://www.anthus.com/Colors/Cent.html by David A.
+  Mundie, converted the NBS Centroid colors from Munsell to
+  CIE XYZ, then converted to Mac QuickDraw RGB.  The colors
+  were visibly biased towards pink and had duplications.
 
-// http://www.anthus.com/Colors/Cent.html by David A. Mundie, converted
-// the NBS Centroid colors from Munsell to CIE XYZ, then converted to Mac
-// QuickDraw RGB.  The colors were visibly biased towards pink and had
-// duplications.
-
-// John Foster reconverted supplied Munsell values via Munsell software
-// downloaded from www.gretagmacbeth.com <http://www.gretagmacbeth.com>
-// directly to RGB, and tried to resolve some duplicates.  Some of these
-// don't even look right, because some of the bright colors are on the
-// dark fringes with less chroma and are not centered and high up on the
-// hue curves.  Many of the original Munsell values (noted) are outside
-// the RGB gamut, and have been adjusted to the closest brightest RGB
-// value by changing chroma until 0 or 255 is reached in one out of
-// bounds RGB component.  Guesses were made in a few cases (noted) where
-// the color was still illogical compared to the name.
+  John Foster reconverted supplied Munsell values via
+  Munsell software downloaded from www.gretagmacbeth.com
+  <http://www.gretagmacbeth.com> directly to RGB, and tried
+  to resolve some duplicates.  Some of these don't even
+  look right, because some of the bright colors are on the
+  dark fringes with less chroma and are not centered and
+  high up on the hue curves.  Many of the original Munsell
+  values (noted) are outside the RGB gamut, and have been
+  adjusted to the closest brightest RGB value by changing
+  chroma until 0 or 255 is reached in one out of bounds RGB
+  component.  Guesses were made in a few cases (noted)
+  where the color was still illogical compared to the name.
+*/
 
 #let ISCC-NBS = (
   "Vivid-Pink": rgb("#FFB5BA"),

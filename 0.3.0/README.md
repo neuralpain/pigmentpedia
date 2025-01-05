@@ -1,38 +1,86 @@
-# pigmentpedia (v0.2.0)
+# pigmentpedia (v0.3.0)
 
 An extended color library for Typst.
 
-> Contains approximately 21,950 pigments at the time of current release.
+> Contains approximately 22,080 pigments at the time of current release.
 
 ## Quick Start
 
+Add Pigmentpedia to your project with the following code.
+
 ```typ
-// a sample document to familiarize yourself with pigmentpedia
+#import "@preview/pigmentpedia:0.3.0": *
+```
 
-#import "@preview/pigmentpedia:0.2.0": *
+Find your perfect pigment.
 
-#set page(background: rotate(-45deg, text(160pt, fill: Pantone.Gray.Cool-Gray-1)[SAMPLE]))
+```typ
+#find-pigment("") // search by text
+#find-pigment("#") // search by HEX code
+```
+
+Optionally create a variable for your favorite pigment.
+
+```typ
+#let heading-text-color = Zhongguo.en.Yellow.Apricot-Red
+
+= #pigment(heading-text-color)[My Heading]
+```
+
+### An example document
+
+The pigments in Pigmentpedia can be used to apply colors to any anything that accepts data of type `color` such as `text`, `polygon`, etc. Use this example document to familiarize yourself with Pigmentpedia.
+
+View the compiled [example.pdf][example] output from the GitHub repository.
+
+<details>
+<summary>View code</summary>
+
+```typ
+// A sample document to familiarize yourself with Pigmentpedia
+
+#import "@preview/pigmentpedia:0.3.0": *
+
+#set page(background: rotate(-45deg, text(11em, fill: luma(97%))[EXAMPLE]))
 #show heading: it => [#v(5mm) #it #v(2mm)]
 #set par(justify: true)
 
-// uncomment to view Crayola colors
-// #view-pigments(Crayola)
+/*
+  FINDING PIGMENTS BEFORE WRITING THE DOCUMENT
+*/
 
-// uncomment to search for a specific color
-// #find-pigment("gray")
-// #find-pigment("orange", scope: Crayola) // search within scope
+// Uncomment to view China Traditional Grey-White colors
+// #view-pigments(Zhongguo.en.Grey-White)
 
+// Uncomment to search within Crayola for a "burnt" color
+// #find-pigment("burnt", scope: Crayola)
+
+/*
+  VISUAL ELEMENTS
+*/
+
+#let cs-o = 100mm; #let cs-g = 200mm; #let cs-b-l = 100mm; #let cs-b-s = 30mm;
+#place(dx: -80mm, dy: 40mm, circle(width: cs-o, height: cs-o, fill: Zhongguo.en.Grey-White.Fish-Maw-White))
+#place(dx: 130mm, dy: -100mm, circle(width: cs-g, height: cs-g, fill: Zhongguo.en.Grey-White.White-Tea))
+#place(dx: 50mm, dy: 180mm, circle(width: cs-b-l, height: cs-b-l, fill: Zhongguo.en.Grey-White.Snow-White))
+#place(dx: 120mm, dy: 260mm, circle(width: cs-b-s, height: cs-b-s, fill: Zhongguo.en.Grey-White.Crystal-White))
+
+/*
+  THE DOCUMENT
+*/
 = #text(Crayola.Standard.Maximum-Red, 2em)[A Journey Through Hope]
 
 == #pigment(Crayola.Standard.Burnt-Orange)[A Healthy Diet Starts With You]
 
-#pigment(Crayola.Standard.Orange, lorem(80))
+#pigment(Crayola.Standard.Orange, lorem(10)) \ \
+#pigment(Crayola.Standard.Orange, lorem(90)) \ \
+#pigment(Crayola.Standard.Orange, lorem(40))
 
 == #pigment(Crayola.Standard.Maximum-Blue)[Enough Sleep For A Lifetime]
 
 #pigment(Crayola.Standard.Cerulean-Blue)[
-  #lorem(100) \ \
-  #lorem(100)
+  #lorem(25) \ \
+  #lorem(85)
 ]
 
 == #pigment(Crayola.Standard.Maximum-Green)[No Better Time Than The Present]
@@ -42,107 +90,177 @@ An extended color library for Typst.
 #align(bottom)[
   #line(length: 100%, stroke: 0.2pt + grey)
   #emph(
-    pigment(Pantone.Gray.Cool-Gray-11)[
-      This is a sample document showcasing the use of pigmentpedia in text application. The pigments in pigmentpedia are not solely for text; they can be used anywhere you need a more diverse range of color in your documentation.
+    pigment(Pantone.C.Gray.Cool-Gray-11)[
+      This is a sample document showcasing the use of Pigmentpedia in text application. The pigments in Pigmentpedia are not solely for text; they can be used anywhere you need a more diverse range of color in your documentation.
 
-      Это образец документа, демонстрирующий использование pigmentpedia в текстовом приложении. Пигменты в pigmentpedia предназначены не только для текста; их можно использовать везде, где вам нужен более разнообразный диапазон цветов в вашей документации.
+      Это образец документа, демонстрирующий использование Pigmentpedia в текстовом приложении. Пигменты в Pigmentpedia предназначены не только для текста; их можно использовать везде, где вам нужен более разнообразный диапазон цветов в вашей документации.
 
-      这是一个示例文档，展示了在文本应用程序中使用pigmentpedia。pigmentpedia中的颜料不仅仅用于文本；它们可以用在文档中需要更多样化颜色的任何地方。
+      这是一个示例文档，展示了在文本应用程序中使用Pigmentpedia。Pigmentpedia中的颜料不仅仅用于文本；它们可以用在文档中需要更多样化颜色的任何地方。
     ],
   )
 ]
 
-// --- SCROLL TO VIEW BELOW ---
+/*
+  PREVIEW COLORS YOU MAY WANT TO CHANGE
+*/
 
-// find a nice green color
-// #find-pigment("G20Y") // search with NCS partial color name
-// uncomment to view a nice green color
-// #view-pigment(NCS.S-1070-G20Y)
+// Uncomment to find a nice green color
+// the spaces ` ` are converted to hyphens `-` for search
+// #find-pigment("70 G20Y") // search within all of pigmentpedia
+// this space here ^^^ --> becomes "70-G20Y"
+
+// Uncomment to view a nice green color
+// #view-pigments(NCS.S-1070-G20Y)
 ```
+
+</details>
 
 ## Usage
 
-Add pigmentpedia to your project with the following code.
+Pigmentpedia has 3 main functions:
 
-```typ
-#import "@preview/pigmentpedia:0.2.0": *
-```
+- `pigment()`: Apply a pigment to content. Accepts data of type `color`.
+- `find-pigment()`: Search for a specific pigment. Accepts data of type `str`.
+- `view-pigments()`: Display an individual pigment or a specified group of pigments. Accepts data of type `dictionary` or `color`.
 
-Pigment text with either `text()` or the custom `pigment()` wrapper that does the same job but only for color.
+and 2 auxiliary functions:
 
-> I wanted to **only** set a color to a specific group text so I created this wrapper function. It also makes it easier to find/select in search among other `text()` elements. #petpeeve
+- `pgmt.show-all`: Display all pigments in Pigmentpedia.
+- `pgmt.tree`: Display a visual "map" for pigment groups in Pigmentpedia.
 
-```typ
-#text(DIC.CG456.DIC-2001)[This text has a DIC 2001 pigment.]
-// ---
-#pigment(NCS.S-0570-Y)[This text is has a NCS S-0570-Y pigment.]
-```
+### Applying pigments to content
 
-### Display all pigments from (...)
+1. Pigment text with either `text()`, or you can use `pigment()` which only applies color to content.
 
-There are a lot of colors included within pigmentpedia and it would be a hassle to remember the names of them all. Luckily, you can do a quick search through the list to view and find a color you want to use in your project/document.
+   > `pigment()` makes it easier for me to find/select this specific formatting element in search among other `text()` elements. #petpeeve
+
+   ```typ
+   #text(DIC.CG456.DIC-2001)[This text has a DIC 2001 pigment.]
+   // or
+   #pigment(NCS.S-0570-Y)[This text is has a NCS S-0570-Y pigment.]
+   ```
+
+2. As a fill color for other elements.
+
+   ```typ
+   #circle(width: 50mm, height: 50mm, fill: NCS.S-0502-B)
+   //                                       ^^^^^^^^^^^^
+   ```
+
+### Display all pigments from (...) using `view-pigments()`
+
+There are a lot of pigments included in Pigmentpedia and it would be a hassle to remember the names (or codes) of them all. Luckily, you can do a quick search through the list to view and find colors you want to use in your project/document.
+
+<details>
+<summary>Note</summary>
+
+If you're unfamiliar with the standards or pigments here in Pigmentpedia, I recommend [viewing the pigment groups](#navigating-through-pigmentpedia) to discover their names.
+
+</details>
 
 ```typ
 // show all 20k+ pigments
-#show-pigmentpedia() // dedicated wrapper function
-#view-pigments(pigmentpedia) // directly using the `pigmentpedia` list
+#view-pigments(pigmentpedia) // directly passing the `pigmentpedia` list
+#pgmt.show-all // or use this shorthand to get the same result
 
 // show all pigments from a specific group
-#view-pigments(NordTheme)
+#view-pigments(Nord)
 
 // show only a specific subset of pigments from a group
-#view-pigments(Zhongguo.en.Blue)
+#view-pigments(Zhongguo.en.Blue) // set of Blue-ish colors from the English subset
 ```
 
-<!--
-> [!TIP]
-> If you're unfamiliar with the standards or pigments here in pigmentpedia, I would recommend viewing the pigment groups to discover their names.
--->
+### View an individual pigment with `view-pigments()`
 
-### View a specific pigment from pigmentpedia
+<details>
+<summary>Note (from an unreleased update)</summary>
 
-If you want to have a look at a single pigment, you can isolate it on a single page.
+> In the previous _unreleased_ 0.2.0 version of Pigmentpedia, there were two functions for viewing pigments: `view-pigment()` and `view-pigments()` where the former was responsible for only displaying a single pigment (accepting data of type `color`) and the latter was responsible for only displaying pigment groups (accepting data of type `dictionary`).
+>
+> The close similarity of their names were thought to bring confusion to the users, therefore, in order to provide a better user experience, it was decided that as of version 0.3.0, `view-pigment()` would be made a private function and integrated within `view-pigments()` allowing for two types of input to the single function (both `color` and `dictionary`).
+>
+> If you as the user would prefer to have these two separate functions, feel free to provide your feedback or comments on this change.
+
+</details>
+
+If you want to have a look at a single pigment, you can isolate it on a single page by passing the color value as an argument in `view-pigments()`.
 
 ```typ
-// just remove the "s" from `view-pigments`
-#view-pigment(Catppuccin.Latte.Mauve)
+#view-pigments(RAL.Classic.Raspberry-Red)
 ```
 
-You can also use `view-pigment()` to display custom colors.
+You can also use `view-pigments()` to display custom colors.
 
 ```typ
-#view-pigment(rgb(23,56,129)) // RGB color
-#view-pigment(luma(24)) // Luma color
-#view-pigment(color.hsl(30deg, 50%, 60%)) // HSL color
+#view-pigments(rgb(67, 23, 129)) // RGB color
+#view-pigments(luma(24)) // Luma color
+#view-pigments(color.hsl(30deg, 50%, 60%)) // HSL color
 ```
 
-### Search for a specific pigment
+### Search for a specific pigment with `find-pigment()`
 
-Find a pigment you're familiar with, or one even better. You can search with either the partial name or HEX code. Search is not case-sensitive, but multiple keywords strictly reserves the order of precedence.
+Find a pigment you're familiar with, or one even better. You can search with either the partial name or `HEX` code.
+
+#### Search by name
+
+Search is not case-sensitive, but multiple keywords strictly reserves the order of precedence, and they are treated as a single keyword. For example, `find-pigment("foo bar")` will return results for `foo-bar` and `find-pigment("bar foo")` will return results for `bar-foo`.
+
+Currently, `find-pigment()` will not return results for both `foo` and `bar` individually.
 
 ```typ
 // find Zhongguo.en.Red.Blood-Flowing-Red
 #find-pigment("blood flowing")
+```
 
+#### Search by `HEX` code
+
+When searching by `HEX` values, the results will show all pigments containing that `HEX` fragment at any part of the `HEX` code.
+
+```typ
 // find pigment match with a partial or complete HEX code
 #find-pigment("#d68")
 ```
 
-<!--
-You can also search within a `scope` of pigments to narrow down your results.
+<details>
+<summary>Search results</summary>
 
-```typ
-// find orange pigments within Crayola
-#find-pigment("orange", scope: Crayola)
+```
+#2D68C4
+  ^^^
+#006D68
+    ^^^
+#D68A28
+ ^^^
+[...]
 ```
 
-> [!CAUTION]
-> While the option for a "scoped search" is available, you could end up with duplicate pigments in the results which could lead to the search taking an arbitrarily long time to complete, or even not complete at all.
->
-> It's recommended to avoid using the `scope` parameter until the bugs are fixed.
->
-> **_Apart from this, the search feature_ is _functional._**
--->
+</details>
+
+#### Searching within a `scope`
+
+You can also search within a specific `scope` or subset of pigments to narrow down your results.
+
+```typ
+// find all orange-like pigments within Crayola
+#find-pigment("orange", scope: Crayola)
+
+// find a pigment in `Pantone.PMS.SkinTone` matching the partial HEX code
+#find-pigment("#887", scope: Pantone.PMS.SkinTone)
+```
+
+#### Understanding the search results
+
+The search results will return the group name and breadcrumb (a visual path of connected pigment groups) of the pigments found and then a list of pigments matching the search within that group.
+
+Follow the breadcrumbs in dot notation to use the pigments returned from search.
+
+```
+RAL → Classic // `RAL.Classic`
+// matching pigments listed below
+// ...
+```
+
+View the [example.pdf][example] from the GitHub repository.
 
 ## Pigment Groups
 
@@ -157,7 +275,7 @@ You can also search within a `scope` of pigments to narrow down your results.
   - Pantone XGC (Extended Gamut Coated)
   - Pantone PMS (Pantone Matching System)
 - DIC Digital Color Guide®
-- Natural Color System®
+- Natural Colour System®
 - RAL Colors
   - RAL Classic
   - RAL Design
@@ -170,23 +288,26 @@ You can also search within a `scope` of pigments to narrow down your results.
 - ISCC–NBS System of Color Designation
 - Nippon Paint Colors
 
-### Other pigments
+### Theme palettes
 
 - Catppuccin [⧉](https://github.com/catppuccin/catppuccin)
-- Nord Theme [⧉](https://github.com/nordtheme/nord)
+- Nord [⧉](https://github.com/nordtheme/nord)
+
+### Other pigments
+
 - Crayola Colors
 - Chinese Traditional Colors
 - Japanese Traditional Colors
 
 ## Navigating through pigmentpedia
 
-Below is a flat ASCII tree type representation of the dictionary structure of pigmentpedia.
+Below is a flat ASCII tree representation of the structure of Pigmentpedia.
 
 If a group contains a `"."`, it means that some or all pigments can be accessed at the base level of the pigment group.
 
-Use `show-pigmentpedia-tree()` to view this information within your document.
+Use `pgmt.tree` to view this information within your project/document.
 
-> CSS contains basic colors and can be used normally by referencing the color name `red`, `chocolate`, `rebeccapurple` etc., without having to reference the group (similar to HTML). However, you can still access it within `view-pigments()`, `find-pigment()` etc.
+> CSS contains basic colors and can be used normally by referencing the color name `red`, `chocolate`, `rebeccapurple` etc., without having to reference the group (similar to HTML). However, you can still access it within `find-pigment()` and `view-pigments()`, if necessary.
 >
 > **This is only for CSS.**
 >
@@ -194,44 +315,35 @@ Use `show-pigmentpedia-tree()` to view this information within your document.
 > #pigment(firebrick)[This text has CSS firebrick color.]
 > ```
 
-### pigmentpedia displayed as ASCII tree
+<details>
+<summary>
+
+### View Pigmentpedia ASCII tree
+
+</summary>
 
 ```
 CSS
 └── .
 
 Pantone
-├── .
-├── Process
-├── Gray
-└── Grey
-
-Pantone-C
-├── .
-├── Gray
-└── Grey
-
-Pantone-CP
-└── .
-
-Pantone-U
-└── .
-
-Pantone-UP
-└── .
-
-Pantone-XGC
-└── .
-
-Pantone-PMS
-├── .
-├── Process
-├── Hexachrome
-├── Gray
-├── Grey
-├── Metallic
-├── Pastel
-└── SkinTone
+├── C
+│   ├── .
+│   ├── Gray
+│   └── Grey
+├── CP
+├── PMS
+│   ├── .
+│   ├── Process
+│   ├── Hexachrome
+│   ├── Gray
+│   ├── Grey
+│   ├── Metallic
+│   ├── Pastel
+│   └── SkinTone
+├── U
+├── UP
+└── XGC
 
 DIC
 ├── CG-Vol1
@@ -240,16 +352,12 @@ DIC
 ├── TC-France
 └── TC-China
 
-RAL (RAL Classic named colors)
-└── .
+RAL
+├── Classic (Named colors)
+├── Design
+└── Effect
 
-RAL-Classic
-└── .
-
-RAL-Design
-└── .
-
-RAL-Effect
+RAL-Classic (Coded colors)
 └── .
 
 HKS
@@ -303,10 +411,10 @@ Nippon
 ├── jp
 └── romaji
 
-NipponPaint
+Nippon-Paint
 └── .
 
-NordTheme
+Nord
 └── .
 
 Crayola
@@ -315,6 +423,10 @@ Crayola
 └── Fluorescent
 ```
 
+</details>
+
 # License
 
-pigmentpedia is licensed under the MIT license.
+Pigmentpedia is licensed under the MIT license.
+
+[example]: https://github.com/neuralpain/pigmentpedia/blob/main/0.3.0/examples/example.pdf

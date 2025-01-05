@@ -1,11 +1,21 @@
+/*
+  File: text-contrast.typ
+  Author: neuralpain
+  Date Modified: 2025-01-06
+
+  Description: Select the best color for contrast
+  based on the background color of the element the
+  text is placed on.
+*/
+
 #import "convert.typ": dec-to-rgb
 
-/// Get optimal contrast color to display text.
+/// Get optimal contrast color (black or white) to display text.
 ///
-/// - bg_color (): Background color the text is placed on.
-/// ->
+/// - bg_color (color): Background color the text is placed on.
+/// -> color
 #let get-contrast-color(bg_color) = {
-  let hxa = dec-to-rgb(bg_color)
+  let hxa = dec-to-rgb(bg_color) // rgb-esque color array
 
   // Convert the hex color to RGB
   let r = hxa.at(0)

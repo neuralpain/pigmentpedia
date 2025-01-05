@@ -1,4 +1,11 @@
-// HKS® Colors
+/*
+  HKS® Colors
+
+  E - Coated
+  K - Coated
+  N - Uncoated
+  Z - Special
+*/
 
 #let HKS = (
   "_1": rgb("#FFE37E"),

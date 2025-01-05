@@ -1,104 +1,98 @@
+/*
+  File: display.typ
+  Author: neuralpain
+  Date Modified: 2025-01-06
+
+  Description: Module for collecting and
+  displaying pigments to the user.
+*/
+
 #import "private.typ": *
 #import "pigments.typ": *
 #import "text-contrast.typ": get-contrast-color
 
-/// View a single color pigment on a page
+/// Display a single pigment on a page.
 ///
-/// - color ():
-/// ->
+/// This function has been made private and integrated
+/// within `view-pigments()` as to prevent confusion with
+/// the end users.
+///
+/// ```typ
+/// #view-pigment(RAL.Chocolate-Brown)
+/// ```
+///
+/// - color (color): Pigment color value.
+/// -> content
 #let view-pigment(color) = {
-  set page(..pigmentpage)
-  counter(page).update(1)
-  set text(size: 16pt, black, font: "Libertinus Serif")
-  set grid(gutter: 2em)
-
-  align(center + horizon)[
-    #if type(color) != "color" {
-      pigment(red)[
-        #raw("Error: Not a color.") \ \
-        #raw("Use `view-pigments()`") \
-        #raw("for pigment groups.") \ \
-        #raw("Use `rgb(\"#000000\")`") \
-        #raw("to enter HEX codes.")
-      ]
+  pgmt-page-setup({
+    if type(color) != "color" {
+      pgmt-error.not-a-color
     } else {
-      rect(
-        height: 60%,
-        width: 80%,
-        radius: 25pt,
-        fill: color,
-        text(
-          fill: get-contrast-color(color),
-          size: 4em,
-          weight: "bold",
-          raw(upper(color.to-hex())),
-        ),
-      )
+      align(center + horizon)[
+        #rect(height: 60%, width: 80%, radius: 25pt, fill: color, text(fill: get-contrast-color(color), size: 4em, weight: "bold", raw(upper(color.to-hex()))))
+      ]
     }
-  ]
+  })
 }
 
-#let get-pigments-to-display(list) = {
-  if type(list) == "dictionary" {
-    for i in list {
-      if (type(i.at(1)) == "color") {
-        let name = i.at(0)
-        let color = i.at(1)
-        block(
-          ..colorbox-block-properties,
-          stroke: 2pt + color,
-          stack(
-            spacing: 5mm,
-            rect(..colorbox, fill: color),
-            name,
-            raw(upper(color.to-hex())),
-          ),
-        )
-      } else {
-        block(
-          ..colorbox-block-properties,
-          stack(
-            rect(
-              radius: 100%,
-              width: 100%,
-              stroke: 1pt + black,
-              pad(
-                y: 8mm,
-                align(center)[ #pigment(black, i.at(0))],
-              ),
-            ),
-          ),
-        )
-        get-pigments-to-display(i.at(1))
-      }
+/// Search through the `scope` to find the color to pigment
+/// to display for the user.
+///
+/// - pgmt-group (dictionary): The pigment group to search from.
+/// -> content
+#let get-pigments-to-display(pgmt-group) = {
+  for (name, color) in pgmt-group {
+    if (type(color) == "color") {
+      block(
+        ..colorbox-block-properties, stroke: 2pt + color,
+        stack(spacing: 5mm, rect(..colorbox, fill: color), name, raw(upper(color.to-hex()))),
+      )
+    } else {
+      block(
+        ..colorbox-block-properties,
+        stack(rect(radius: 100%, width: 100%, stroke: 1pt + black, pad(y: 8mm, align(center)[#pigment(black, name)]))),
+      )
+      get-pigments-to-display(color)
     }
-  } else {
-    pigment(red)[
-      #colbreak()
-      #align(horizon)[
-        #raw("Error: The selected item is not a valid pigment group.")
-      ]
-    ]
   }
 }
 
-/// Show a visual list of colors to select from
+/// Show a visual list of colors to select from.
 ///
-/// - pigment-group (): Pigment group
-/// ->
-#let view-pigments(pigment-group) = {
-  set page(..pigmentpage, columns: 3)
-  counter(page).update(1)
-  set text(size: 16pt, black, font: "Libertinus Serif")
-  set grid(gutter: 2em)
-
-  get-pigments-to-display(pigment-group)
-}
-
-/// Wrapper function for attaching pigments only
+/// ```typ
+/// #view-pigments(NCS)
+/// #view-pigments(Zhongguo.en)
+/// ```
 ///
-/// ->
-#let show-pigmentpedia() = {
-  view-pigments(pigmentpedia)
-}
+/// Display a single pigment on a page.
+///
+/// ```typ
+/// #view-pigments(Zhongguo.en.Blue.Violet-Blue)
+/// ```
+///
+/// - scope (dictionary, color): Pigment group or color to display.
+/// -> content
+#let view-pigments(scope) = {
+  pgmt-page-setup({
+    // catch any pigments entered by the user
+    // this is an anticipated user error turned feature
+    if type(scope) == "color" {
+      view-pigment(scope)
+      return
+    } else if type(scope) != "dictionary" {
+      pgmt-error.not-a-pgmt-group
+      return
+    }
 
+    set page(columns: 3)
+
+    if scope != pigmentpedia {
+      block(
+        ..colorbox-block-properties,
+        stack(rect(radius: 100%, width: 100%, stroke: 1pt + black, pad(y: 8mm, align(center)[#pigment(black, get-pgmt-group-name(scope))])))
+      )
+    }
+
+    get-pigments-to-display(scope)
+  })
+}

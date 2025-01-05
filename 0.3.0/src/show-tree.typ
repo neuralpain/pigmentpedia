@@ -1,52 +1,50 @@
+/*
+  File: show-tree.typ
+  Author: neuralpain
+  Date Modified: 2025-01-06
+
+  Description: Display Pigmentpedia ASCII tree.
+*/
+
+/// Display the structure of `pigmentpedia` in ASCII.
+///
+/// -> content
 #let show-pigmentpedia-tree() = {
   set page(
     columns: 2,
-    margin: (top: 1in, bottom: 0.5in),
-    height: 13in,
-    width: 8in,
-    header: align(center)[#raw("pigmentpedia displayed as ASCII tree") \ \ ],
+    margin: (top: 20mm, bottom: 12mm, x: 25mm),
+    height: 12in,
+    width: 8.5in,
+    header: align(center)[`pigmentpedia ASCII tree` \ ],
+    footer: align(center)[#text(9pt, `https://typst.app/universe/package/pigmentpedia`)],
   )
+  set text(12.5pt, black)
+  v(5mm)
+  raw("This is a flat ASCII tree representation of the structure of pigmentpedia.
 
-  raw("Below is a flat ASCII tree type representation of the dictionary structure of pigmentpedia.
-
-If a group contains a \".\", it means that some or all pigments can be accessed at the base level of the pigment group.
-
+If a top-level group contains a \".\", it means that some or all pigments can be accessed at the base level of the pigment group.
 
 CSS
 └── .
 
 Pantone
-├── .
-├── Process
-├── Gray
-└── Grey
-
-Pantone-C
-├── .
-├── Gray
-└── Grey
-
-Pantone-CP
-└── .
-
-Pantone-U
-└── .
-
-Pantone-UP
-└── .
-
-Pantone-XGC
-└── .
-
-Pantone-PMS
-├── .
-├── Process
-├── Hexachrome
-├── Gray
-├── Grey
-├── Metallic
-├── Pastel
-└── SkinTone
+├── C
+│   ├── .
+│   ├── Gray
+│   └── Grey
+├── CP
+├── PMS
+│   ├── .
+│   ├── Process
+│   ├── Hexachrome
+│   ├── Gray
+│   ├── Grey
+│   ├── Metallic
+│   ├── Pastel
+│   └── SkinTone
+├── U
+├── UP
+└── XGC
 
 DIC
 ├── CG-Vol1
@@ -55,16 +53,12 @@ DIC
 ├── TC-France
 └── TC-China
 
-RAL (RAL Classic named colors)
-└── .
+RAL
+├── Classic (Named colors)
+├── Design
+└── Effect
 
-RAL-Classic
-└── .
-
-RAL-Design
-└── .
-
-RAL-Effect
+RAL-Classic (Coded colors)
 └── .
 
 HKS
@@ -118,10 +112,10 @@ Nippon
 ├── jp
 └── romaji
 
-NipponPaint
+Nippon-Paint
 └── .
 
-NordTheme
+Nord
 └── .
 
 Crayola

@@ -1,7 +1,11 @@
-// Nippon Paint
-// Nippon Paint is a leading global paint and coatings manufacturer based in Japan.
+/*
+  Nippon Paint
 
-#let NipponPaint = (
+  A leading global paint and coatings manufacturer
+  based in Japan.
+*/
+
+#let Nippon-Paint = (
   "RC0107-4": rgb("#FBFBF6"),
   "RC0251-4": rgb("#F0DCE2"),
   "RC0260-4": rgb("#EFD0DF"),

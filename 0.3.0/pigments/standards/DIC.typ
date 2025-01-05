@@ -1,12 +1,13 @@
+/*
+  DIC Digital Color Guide®
+  https://www.dic-global.com
 
-// DIC Digital Color Guide®
-// https://www.dic-global.com
-
-// CG-Vol1: Color Guide Vol. 1
-// CG-Vol2: Color Guide Vol. 2
-// TC-Japan: Traditional Colors of Japan
-// TC-France: Traditional Colors of France
-// TC-China: Traditional Colors of China
+  CG-Vol1   - DIC Color Guide Volume 1
+  CG-Vol2   - DIC Color Guide Volume 2
+  TC-Japan  - Traditional Colors of Japan
+  TC-France - Traditional Colors of France
+  TC-China  - Traditional Colors of China
+*/
 
 #let DIC = (
   "CG-Vol1": (
