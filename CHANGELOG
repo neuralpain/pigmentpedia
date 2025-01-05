@@ -1,10 +1,18 @@
 CHANGELOG
 
+0.3.0
+
+- Fix issue with scoped search.
+- Visual layout improvements.
+- Code improvements and optimization.
+- Updated pigment groups.
+- Updated documentation.
+
 0.2.0
 
-- Added over 20k colors across 13 color standards.
+- Added more pigments and 8 color standards.
 - Created functions for searching and displaying pigments.
 
 0.1.0
 
-- Initial release with 100 colors.
+- Initial release with a 149 colors.
