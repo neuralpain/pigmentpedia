@@ -1,9 +1,10 @@
 .DS_Store
 
+ANPA/
+
 test.typ
 *.test.typ
 
-*.pdf
 *.url
 *.bak
 *.csv
