@@ -1,12 +1,12 @@
 /*
   File: show-tree.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-01-07
 
   Description: Display Pigmentpedia ASCII tree.
 */
 
-/// Display the structure of `pigmentpedia` in ASCII.
+/// Display the structure of `pigmentpedia` in ASCII format.
 ///
 /// -> content
 #let show-pigmentpedia-tree() = {
