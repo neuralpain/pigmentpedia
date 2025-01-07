@@ -12,5 +12,8 @@ keywords = [
   "pantone", "hks", "web", "css", "ral"
 ]
 exclude = [
-  "examples/"
+  "examples/",
+  "assets/logo/pigmentpedia-logo.svg",
+  "assets/logo/pigmentpedia-logo-black.svg",
+  "assets/logo/pigmentpedia-logo-white.svg",
 ]
