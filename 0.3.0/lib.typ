@@ -15,6 +15,7 @@
 #import "src/display.typ": view-pigments
 #import "src/search.typ": find-pigment
 #import "src/show-tree.typ": show-pigmentpedia-tree
+#import "src/sample-pigments.typ": sample-pigments
 
 #let pgmt = (
   show-all: view-pigments(pigmentpedia),
