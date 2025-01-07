@@ -1,3 +1,9 @@
+<p align="center">
+  <picture>
+    <img src="https://github.com/user-attachments/assets/452d6416-ad69-4e43-81d5-be7e43c1082c" height="96px" alt="pigmentpedia logo">
+  </picture>
+</p>
+
 # pigmentpedia (v0.3.0)
 
 An extended color library for Typst.
@@ -6,18 +12,24 @@ An extended color library for Typst.
 
 ## Quick Start
 
-Add Pigmentpedia to your project with the following code.
+1. Add Pigmentpedia to your project with the following code.
 
-```typ
-#import "@preview/pigmentpedia:0.3.0": *
-```
+   ```typ
+   #import "@preview/pigmentpedia:0.3.0": *
+   ```
 
-Find your perfect pigment.
+2. Watch your source file (if you're working offline).
 
-```typ
-#find-pigment("") // search by text
-#find-pigment("#") // search by HEX code
-```
+   ```
+   typst watch file.typ
+   ```
+
+3. Find your perfect pigment.
+
+   ```typ
+   #find-pigment("") // search by text
+   #find-pigment("#") // search by HEX code
+   ```
 
 Optionally create a variable for your favorite pigment.
 
@@ -208,21 +220,22 @@ Search is not case-sensitive, but multiple keywords strictly reserves the order 
 Currently, `find-pigment()` will not return results for both `foo` and `bar` individually.
 
 ```typ
-// find Zhongguo.en.Red.Blood-Flowing-Red
+// find a pigment who's name matches `blood-flowing`
 #find-pigment("blood flowing")
+// returns `Zhongguo.en.Red.Blood-Flowing-Red`
 ```
 
 #### Search by `HEX` code
 
-When searching by `HEX` values, the results will show all pigments containing that `HEX` fragment at any part of the `HEX` code.
+When searching by `HEX` values, the string **must** begin with the hash symbol `#` regardless of which part of the code is being searched. The search results will show all pigments containing that `HEX` fragment at any part of the `HEX` code.
 
 ```typ
-// find pigment match with a partial or complete HEX code
+// find pigment match for the HEX fragment `d68`
 #find-pigment("#d68")
 ```
 
 <details>
-<summary>Search results</summary>
+<summary>View search result sample</summary>
 
 ```
 #2D68C4
