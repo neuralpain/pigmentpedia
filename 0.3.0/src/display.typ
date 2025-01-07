@@ -1,7 +1,7 @@
 /*
   File: display.typ
   Author: neuralpain
-  Date Modified: 2025-01-07
+  Date Modified: 2025-01-08
 
   Description: Module for collecting and
   displaying pigments to the user.
@@ -28,6 +28,21 @@
 /// -> content
 #let view-pigment(color, bg: white) = {
   pgmt-page-setup(bg: bg, {
+    set page(footer: align(center)[
+      #let svg-h = 5mm // logo height
+      #if bg == white {
+        image("../assets/logo/pigmentpedia-icon.svg", height: svg-h)
+      } else {
+        // converting to hex string because luma value will
+        // not match hex value even though it's the same color
+        let ccl = get-contrast-color(bg).to-hex() // contrast color logo
+        if ccl == black.to-hex() {
+          image("../assets/logo/pigmentpedia-icon-black.svg", height: svg-h)
+        } else if ccl == white.to-hex() {
+          image("../assets/logo/pigmentpedia-icon-white.svg", height: svg-h)
+        }
+      }
+    ])
     if type(color) != "color" {
       pgmt-error.not-a-color
     } else {
@@ -85,7 +100,9 @@
     if type(scope) == "color" {
       view-pigment(scope, bg: bg)
       return
-    } else if type(scope) != "dictionary" {
+    }
+
+    if type(scope) != "dictionary" {
       pgmt-error.not-a-pgmt-group
       return
     }

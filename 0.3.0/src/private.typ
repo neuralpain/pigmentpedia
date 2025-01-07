@@ -1,7 +1,7 @@
 /*
   File: private.typ
   Author: neuralpain
-  Date Modified: 2025-01-07
+  Date Modified: 2025-01-08
 
   Description: Private functions shared by
   multiple modules, not accessible to the end
@@ -22,7 +22,7 @@
 // page setup for `pigmentpedia` view
 #let pigmentpage = (
   paper: "a4",
-  margin: (x: 1cm, y: 2cm),
+  margin: (x: 1cm, top: 3cm, bottom: 2cm),
   foreground: none,
   background: none,
   header: align(center, text(11pt, pad(y: 3mm, pgmt-page-list-heading))),
@@ -48,7 +48,18 @@
 ///   the background color.
 /// -> content
 #let pgmt-page-setup(body, bg: white) = {
-  set page(..pigmentpage, fill: bg)
+  set page(
+    ..pigmentpage,
+    fill: bg,
+    header: align(center)[
+      #let svg-h = 5mm // logo height
+      #if bg == white {
+        image("../assets/logo/pigmentpedia-logo.png", height: svg-h); v(3mm)
+      } else {
+        text(11pt, pad(y: 3mm, pgmt-page-list-heading))
+      }
+    ],
+  )
   counter(page).update(1)
   set text(size: 16pt, get-contrast-color(bg), font: "Libertinus Serif")
   set grid(gutter: 2em)
@@ -95,6 +106,7 @@
     ]
   },
   scope-is-color: {
+    set page(fill: white)
     align(center + horizon)[
       #pigment(red)[
         `Error: 'scope' cannot be a pigment.` \ \
@@ -103,6 +115,7 @@
     ]
   },
   not-a-pgmt-group: {
+    set page(fill: white)
     align(center + horizon)[
       #pigment(red)[
         `Error: The selected item` \
