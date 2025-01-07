@@ -1,7 +1,7 @@
 /*
   File: search.typ
   Author: neuralpain
-  Date Modified: 2025-01-07
+  Date Modified: 2025-01-08
 
   Description: Search logic for Pigmentpedia.
 */
@@ -122,11 +122,15 @@
       return
     }
 
-    v(1cm) // small padding from the header
+    if scope != none and type(scope) != "dictionary" {
+      pgmt-error.not-a-pgmt-group
+      return
+    }
+
+    v(0cm) // small padding from the header
 
     align(center)[
-      #pigment(
-        grey,
+      #pigment(if bg != white { get-contrast-color(bg) } else { grey },
         [
           #if key.len() == 0 or key == " " or key == "#" {
             [🔍 Find the perfect pigment...]
@@ -158,9 +162,9 @@
             if valid-hex {
               [🔍 Showing results for "`#`#raw(_key)" #get-pgmt-group-name(l: "in", scope, bg: bg)]
             } else if invalid-hex-symbol != none {
-              pigment(red)[🔍 `Sorry, "`#raw(invalid-hex-symbol)`" is not a valid HEX symbol.`]
+              pigment(red)[`Sorry, "`#raw(invalid-hex-symbol)`" is not a valid HEX symbol.`]
             } else {
-              pigment(red)[🔍 `Too long! "`#raw(key)`" is not a valid HEX code.`]
+              pigment(red)[`Too long! "`#raw(key)`" is not a valid HEX code.`]
             }
           } else {
             [🔍 Showing results for "#key" #get-pgmt-group-name(l: "in", scope, bg: bg)]
