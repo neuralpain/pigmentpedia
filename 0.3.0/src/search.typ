@@ -1,7 +1,7 @@
 /*
   File: search.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-01-07
 
   Description: Search logic for Pigmentpedia.
 */
@@ -104,8 +104,11 @@
 ///
 /// - key (str): Partial name or HEX value to search for.
 /// - scope (dictionary): Pigment group to search within.
+/// - bg (color): The color of the page background. This is
+///   used to choose a contrast color for the text based on
+///   the background color.
 /// -> content
-#let find-pigment(key, scope: none) = {
+#let find-pigment(key, scope: none, bg: white) = {
   // searching through `pigmentpedia` on `scope` will break the search.
   if scope == pigmentpedia {
     // perform a standard search and exit the function.
@@ -113,7 +116,7 @@
     return
   }
 
-  pgmt-page-setup({
+  pgmt-page-setup(bg: bg, {
     if type(scope) == "color" {
       pgmt-error.scope-is-color
       return
@@ -153,14 +156,14 @@
             }
 
             if valid-hex {
-              [🔍 Showing results for "`#`#raw(_key)" #get-pgmt-group-name(l: "in", scope)]
+              [🔍 Showing results for "`#`#raw(_key)" #get-pgmt-group-name(l: "in", scope, bg: bg)]
             } else if invalid-hex-symbol != none {
               pigment(red)[🔍 `Sorry, "`#raw(invalid-hex-symbol)`" is not a valid HEX symbol.`]
             } else {
               pigment(red)[🔍 `Too long! "`#raw(key)`" is not a valid HEX code.`]
             }
           } else {
-            [🔍 Showing results for "#key" #get-pgmt-group-name(l: "in", scope)]
+            [🔍 Showing results for "#key" #get-pgmt-group-name(l: "in", scope, bg: bg)]
           }
         ],
       )

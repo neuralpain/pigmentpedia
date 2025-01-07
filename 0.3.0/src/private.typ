@@ -1,7 +1,7 @@
 /*
   File: private.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-01-07
 
   Description: Private functions shared by
   multiple modules, not accessible to the end
@@ -9,6 +9,7 @@
 */
 
 #import "pigments.typ": *
+#import "text-contrast.typ": get-contrast-color
 
 #let pgmt-page-list-heading = [
   #link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")
@@ -20,7 +21,6 @@
 
 // page setup for `pigmentpedia` view
 #let pigmentpage = (
-  fill: white,
   paper: "a4",
   margin: (x: 1cm, y: 2cm),
   foreground: none,
@@ -43,11 +43,14 @@
 /// Page setup for `pigmentpedia`
 ///
 /// - body (content): `pigmentpedia` pages data
+/// - bg (color): The color of the page background. This is
+///   used to choose a contrast color for the text based on
+///   the background color.
 /// -> content
-#let pgmt-page-setup(body) = {
-  set page(..pigmentpage)
+#let pgmt-page-setup(body, bg: white) = {
+  set page(..pigmentpage, fill: bg)
   counter(page).update(1)
-  set text(size: 16pt, black, font: "Libertinus Serif")
+  set text(size: 16pt, get-contrast-color(bg), font: "Libertinus Serif")
   set grid(gutter: 2em)
   body
 }
@@ -64,13 +67,16 @@
 ///   pigment group name.
 /// - r (str): Text to place on the right side of the
 ///   pigment group name.
+/// - bg (color): The color of the page background. This is
+///   used to choose a contrast color for the text based on
+///   the background color.
 /// -> content
-#let get-pgmt-group-name(scope, depth: pigmentpedia, l: none, r: none) = {
+#let get-pgmt-group-name(scope, depth: pigmentpedia, l: none, r: none, bg: white) = {
   for (a, b) in depth {
     if b == scope {
-      [#l #strong(a) #r]
+      pigment(get-contrast-color(bg))[#l #strong(a) #r]
     } else if type(b) == "dictionary" {
-      get-pgmt-group-name(scope, depth: b, l: l, r: r)
+      get-pgmt-group-name(scope, depth: b, l: l, r: r, bg: bg)
     }
   }
 }

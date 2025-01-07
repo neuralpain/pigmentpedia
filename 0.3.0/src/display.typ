@@ -1,7 +1,7 @@
 /*
   File: display.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-01-07
 
   Description: Module for collecting and
   displaying pigments to the user.
@@ -22,9 +22,12 @@
 /// ```
 ///
 /// - color (color): Pigment color value.
+/// - bg (color): The color of the page background. This is
+///   used to choose a contrast color for the text based on
+///   the background color.
 /// -> content
-#let view-pigment(color) = {
-  pgmt-page-setup({
+#let view-pigment(color, bg: white) = {
+  pgmt-page-setup(bg: bg, {
     if type(color) != "color" {
       pgmt-error.not-a-color
     } else {
@@ -71,13 +74,16 @@
 /// ```
 ///
 /// - scope (dictionary, color): Pigment group or color to display.
+/// - bg (color): The color of the page background. This is
+///   used to choose a contrast color for the text based on
+///   the background color.
 /// -> content
-#let view-pigments(scope) = {
-  pgmt-page-setup({
+#let view-pigments(scope, bg: white) = {
+  pgmt-page-setup(bg: bg, {
     // catch any pigments entered by the user
     // this is an anticipated user error turned feature
     if type(scope) == "color" {
-      view-pigment(scope)
+      view-pigment(scope, bg: bg)
       return
     } else if type(scope) != "dictionary" {
       pgmt-error.not-a-pgmt-group
@@ -89,7 +95,7 @@
     if scope != pigmentpedia {
       block(
         ..colorbox-block-properties,
-        stack(rect(radius: 100%, width: 100%, stroke: 1pt + black, pad(y: 8mm, align(center)[#pigment(black, get-pgmt-group-name(scope))])))
+        stack(rect(radius: 100%, width: 100%, stroke: 1pt + get-contrast-color(bg), pad(y: 8mm, align(center)[#pigment(black, get-pgmt-group-name(scope, bg: bg))])))
       )
     }
 
