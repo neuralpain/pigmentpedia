@@ -1,14 +1,13 @@
 /*
-  File: sample-pigments.typ
+  File: pigment-playground.typ
   Author: neuralpain
-  Date Modified: 2025-01-07
+  Date Modified: 2025-01-08
 
   Description: A sample document to test pigments.
 */
 
 #import "pigments.typ": pigment
 #import "text-contrast.typ": get-contrast-color
-
 
 /// Test out pigments with a sample document.
 ///
@@ -26,7 +25,7 @@
 /// - section-3-text (color): Color of the text in the third section.
 /// - footer-text (color): Color of the footer text.
 /// -> content
-#let sample-pigments(
+#let pigment-playground(
   bg: auto,
   default-text-color: none,
   title: none,
@@ -82,7 +81,19 @@
   #if section-3-text == none { section-3-text = get-contrast-color(bg) }
   #if footer-text == none { footer-text = get-contrast-color(bg) }
 
-  #set page(fill: bg)
+  #set page(
+    fill: bg,
+    header: place(right, dx:15mm, dy:10mm)[
+      #let svg-h = 10mm
+      #let ccl = get-contrast-color(bg).to-hex() // contrast color logo
+      #if ccl == black.to-hex() {
+        image("../assets/logo/pigmentpedia-icon-black.svg", height: svg-h)
+      } else if ccl == white.to-hex() {
+        image("../assets/logo/pigmentpedia-icon-white.svg", height: svg-h)
+      }
+    ],
+  )
+
   #show heading: it => [#v(5mm) #it #v(2mm)]
   #set par(justify: true)
 
