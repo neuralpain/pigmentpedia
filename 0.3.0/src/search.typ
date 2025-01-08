@@ -130,7 +130,7 @@
     v(0cm) // small padding from the header
 
     align(center)[
-      #pigment(if bg != white { get-contrast-color(bg) } else { grey },
+      #pigment(get-contrast-color(bg),
         [
           #if key.len() == 0 or key == " " or key == "#" {
             [🔍 Find the perfect pigment...]
