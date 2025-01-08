@@ -2,7 +2,7 @@
   pigmentpedia by neuralpain
   https://github.com/neuralpain/pigmentpedia
 
-  An extended color library for Typst.
+  An extensive color library for Typst.
 
   Search and apply over 20k pigments across a variety of
   color standards including, but not limited to: PANTONE®,
