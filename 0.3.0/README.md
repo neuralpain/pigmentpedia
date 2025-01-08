@@ -27,17 +27,19 @@
    #find-pigment("#") // search by HEX code
    ```
 
-Optionally create a variable for your favorite pigment to use in your project/document.
+4. Optionally create a variable for your favorite pigment to use in your project/document.
 
-```typ
-#let heading-text-color = Zhongguo.en.Yellow.Apricot-Red
+   ```typ
+   #let heading-text-color = Zhongguo.en.Yellow.Apricot-Red
 
-= #pigment(heading-text-color)[My Heading]
-```
+   = #pigment(heading-text-color)[My Heading]
+   ```
 
 ### An example document
 
-The pigments in Pigmentpedia can be used to apply colors to any anything that accepts data of type `color` such as `text`, `polygon`, etc. Use this example document to familiarize yourself with Pigmentpedia.
+Pigmentpedia can be used to apply colors elements in your project/document such as `text`, `polygon`, etc.
+
+To get started, I recommend experimenting with this example document to help you understand the capabilities of Pigmentpedia and how to effectively use it in your work.
 
 View the compiled [example.pdf][example] output from the GitHub repository.
 
@@ -133,13 +135,13 @@ Pigmentpedia has 3 main functions:
 
 and 3 auxiliary functions:
 
-- `pigment-playground()`: A sample document to test out pigments on text.
+- `pigment-playground()`: A sample document to test out pigments on text elements.
 - `pgmt.show-all`: Display all pigments in Pigmentpedia.
 - `pgmt.tree`: Display a visual "map" for pigment groups in Pigmentpedia.
 
 ### Applying pigments to content
 
-1. Pigment text with either `text()`, or you can use `pigment()` which only applies color to content.
+1. Pigment text with either the `text()` function, or use the `pigment()` function which is focused on only applying color to content.
 
    > `pigment()` makes it easier for me to find/select this specific formatting element in search among other `text()` elements. #petpeeve
 
@@ -158,7 +160,7 @@ and 3 auxiliary functions:
 
 ### Display all pigments from (...) using `view-pigments()`
 
-There are a lot of pigments included in Pigmentpedia and it would be a hassle to remember the names (or codes) of them all. Luckily, you can do a quick search through the list to view and find colors you want to use in your project/document.
+There are a lot of pigments included in Pigmentpedia and it would be a hassle to remember the exact names or codes of specific pigments. Fortunately, you can do a quick search through the list to view and find pigments that you want to use in your project/document.
 
 <details>
 <summary>Note</summary>
@@ -169,7 +171,7 @@ If you're unfamiliar with the standards or pigments here in Pigmentpedia, I reco
 
 ```typ
 // show all 20k+ pigments
-#view-pigments(pigmentpedia) // directly passing the `pigmentpedia` list
+#view-pigments(pigmentpedia) // directly passing the `pigmentpedia` list to the function
 #pgmt.show-all // or use this shorthand to get the same result
 
 // show all pigments from a specific group
@@ -182,17 +184,19 @@ If you're unfamiliar with the standards or pigments here in Pigmentpedia, I reco
 ### View an individual pigment with `view-pigments()`
 
 <details>
-<summary>Note (from an unreleased update)</summary>
+<summary>Note (changes made after an unreleased <code>0.2.0</code> update)</summary>
 
-> In the previous _unreleased_ 0.2.0 version of Pigmentpedia, there were two functions for viewing pigments: `view-pigment()` and `view-pigments()` where the former was responsible for only displaying a single pigment (accepting data of type `color`) and the latter was responsible for only displaying pigment groups (accepting data of type `dictionary`).
+> In the previous _unreleased_ `0.2.0` version of Pigmentpedia, there were two functions for viewing pigments: `view-pigment()` and `view-pigments()` where the former was responsible for only displaying a single pigment (accepting data of type `color`) and the latter was responsible for only displaying pigment groups (accepting data of type `dictionary`).
 >
-> The close similarity of their names were thought to bring confusion to the users, therefore, in order to provide a better user experience, it was decided that as of version 0.3.0, `view-pigment()` would be made a private function and integrated within `view-pigments()` allowing for two types of input to the single function (both `color` and `dictionary`).
+> The close similarity of their names were thought to bring confusion to the users, therefore, in order to provide a better user experience, it was decided that as of version `0.3.0`, `view-pigment()` would be made a private function and integrated within `view-pigments()` allowing for two types of input to the single function (both `color` and `dictionary`).
 >
 > If you as the user would prefer to have these two separate functions, feel free to provide your feedback or comments on this change.
 
 </details>
 
-If you want to have a look at a single pigment, you can isolate it on a single page by passing the color value as an argument in `view-pigments()`.
+To view a single pigment in isolation, use the `view-pigments()` function with the pigment as an argument.
+
+This will display the pigment on its own page, allowing for a focused examination.
 
 ```typ
 #view-pigments(RAL.Classic.Raspberry-Red)
@@ -260,7 +264,7 @@ You can also search within a specific `scope` or subset of pigments to narrow do
 
 #### Understanding the search results
 
-The search results will return the group name and breadcrumb (a visual path of connected pigment groups) of the pigments found and then a list of pigments matching the search within that group.
+Search results will include the group name, a breadcrumb trail (visualizing the pigment's group hierarchy), and a list of matching pigments within that group.
 
 Follow the breadcrumbs in dot notation to use the pigments returned from search.
 
@@ -274,7 +278,7 @@ View the [example.pdf][example] from the GitHub repository.
 
 ### Matching pigments with a background color
 
-It is possible to test out which pigments look good on a specific background color by specifying the color with the `bg` parameter. The `bg` parameter is possible with both `find-pigment()` and `view-pigments()`.
+You can experiment with pigment appearance on a specific background color. Both the `find-pigment()` and `view-pigments()` functions accept a `bg` parameter to specify the background color for the pages.
 
 ```typ
 // find a good pigment from the group to match the background
@@ -285,7 +289,9 @@ It is possible to test out which pigments look good on a specific background col
 #view-pigments(ISCC-NBS.Brilliant-Purple, bg: RAL.Design._300-20-10)
 ```
 
-### Try out pigments on a sample document
+### Try out pigments in the `pigment-playground()`
+
+Prepare a sample document to serve as a "playground" or "creative space" for experimenting with color variations. The color of the background and text elements within this document can be changed dynamically to explore the visual impact of different pigments.
 
 Parameters for the sample document:
 
@@ -363,7 +369,7 @@ If a group contains a `"."`, it means that some or all pigments can be accessed 
 
 Use `pgmt.tree` to view this information within your project/document.
 
-> CSS contains basic colors and can be used normally by referencing the color name `red`, `chocolate`, `rebeccapurple` etc., without having to reference the group (similar to HTML). However, you can still access it within `find-pigment()` and `view-pigments()`, if necessary.
+> CSS contains basic colors and can be used normally by referencing the color names such as `red`, `chocolate`, `rebeccapurple` etc., without having to reference the group (similar to HTML). However, you can still use the `CSS` list within `find-pigment()` and `view-pigments()` as a `scope` argument, and if necessary, use dot notation to access its pigments, e.g. `CSS.red`.
 >
 > **This is only for CSS.**
 >
