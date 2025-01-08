@@ -1,18 +1,14 @@
 <p align="center">
   <picture>
-    <img src="https://github.com/user-attachments/assets/452d6416-ad69-4e43-81d5-be7e43c1082c" height="96px" alt="pigmentpedia logo">
+    <img src="https://github.com/user-attachments/assets/452d6416-ad69-4e43-81d5-be7e43c1082c" height="64px" alt="pigmentpedia logo">
   </picture>
 </p>
 
-# pigmentpedia (v0.3.0)
-
-An extended color library for Typst.
-
-> Contains approximately 22,080 pigments at the time of current release.
+<p align="center">An extensive color library for Typst.</p>
 
 ## Quick Start
 
-1. Add Pigmentpedia to your project with the following code.
+1. Add Pigmentpedia to your project.
 
    ```typ
    #import "@preview/pigmentpedia:0.3.0": *
@@ -31,7 +27,7 @@ An extended color library for Typst.
    #find-pigment("#") // search by HEX code
    ```
 
-Optionally create a variable for your favorite pigment.
+Optionally create a variable for your favorite pigment to use in your project/document.
 
 ```typ
 #let heading-text-color = Zhongguo.en.Yellow.Apricot-Red
@@ -45,7 +41,7 @@ The pigments in Pigmentpedia can be used to apply colors to any anything that ac
 
 View the compiled [example.pdf][example] output from the GitHub repository.
 
-<details>
+<details open>
 <summary>View code</summary>
 
 ```typ
@@ -135,8 +131,9 @@ Pigmentpedia has 3 main functions:
 - `find-pigment()`: Search for a specific pigment. Accepts data of type `str`.
 - `view-pigments()`: Display an individual pigment or a specified group of pigments. Accepts data of type `dictionary` or `color`.
 
-and 2 auxiliary functions:
+and 3 auxiliary functions:
 
+- `pigment-playground()`: A sample document to test out pigments on text.
 - `pgmt.show-all`: Display all pigments in Pigmentpedia.
 - `pgmt.tree`: Display a visual "map" for pigment groups in Pigmentpedia.
 
@@ -274,6 +271,52 @@ RAL → Classic // `RAL.Classic`
 ```
 
 View the [example.pdf][example] from the GitHub repository.
+
+### Matching pigments with a background color
+
+It is possible to test out which pigments look good on a specific background color by specifying the color with the `bg` parameter. The `bg` parameter is possible with both `find-pigment()` and `view-pigments()`.
+
+```typ
+// find a good pigment from the group to match the background
+#find-pigment("purple", scope: ISCC-NBS, bg: RAL.Design._300-20-10)
+// compare other pigments from the group to match the background
+#view-pigments(ISCC-NBS, bg: RAL.Design._300-20-10)
+// view a single pigment to feel the contrast
+#view-pigments(ISCC-NBS.Brilliant-Purple, bg: RAL.Design._300-20-10)
+```
+
+### Try out pigments on a sample document
+
+Parameters for the sample document:
+
+- `bg`: Background color of the page.
+- `default-text-color`: Apply one color to all text.
+- `title`: Color of the title text.
+- `section-1`: Color of the first section of text. Will affect both heading and text of section 1.
+- `section-1-heading`: Color of the header of the first section of text.
+- `section-1-text`: Color of the text in the first section.
+- `section-2`: Color of the second section of text. Will affect both heading and text of section 2.
+- `section-2-heading`: Color of the header of the second section of text.
+- `section-2-text`: Color of the text in the second section.
+- `section-3`: Color of the third section of text. Will affect both heading and text of section 3.
+- `section-3-heading`: Color of the header of the third section of text.
+- `section-3-text`: Color of the text in the third section.
+- `footer-text`: Color of the footer text.
+
+<details open>
+<summary>Example usage</summary>
+
+```typ
+#pigment-playground(
+  title: red,
+  section-1-heading: orange,
+  section-2-heading: yellow,
+  section-3-heading: blue,
+  footer-text: gray,
+)
+```
+
+</details>
 
 ## Pigment Groups
 
@@ -441,5 +484,11 @@ Crayola
 # License
 
 Pigmentpedia is licensed under the MIT license.
+
+<p align="center">
+  <br><picture>
+    <img src="https://github.com/user-attachments/assets/762ff844-67d1-4c13-b45a-557e179c2adb" height="24px" alt="pigmentpedia icon">
+  </picture>
+</p>
 
 [example]: https://github.com/neuralpain/pigmentpedia/blob/main/0.3.0/examples/example.pdf
