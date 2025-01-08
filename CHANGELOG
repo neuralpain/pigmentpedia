@@ -3,15 +3,17 @@ CHANGELOG
 0.3.0
 
 - Fix issue with scoped search.
+- Add Pigmentpedia logo.
+- Add sample document for testing pigments.
 - Visual layout improvements.
-- Code improvements and optimization.
-- Updated pigment groups.
-- Updated documentation.
+- Update pigment groups.
+- Update documentation.
+- Other bug fixes, code improvements and optimization.
 
 0.2.0
 
-- Added more pigments and 8 color standards.
-- Created functions for searching and displaying pigments.
+- Add more pigments and 8 color standards.
+- Create functions for searching and displaying pigments.
 
 0.1.0
 
