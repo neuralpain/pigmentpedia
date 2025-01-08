@@ -54,9 +54,9 @@
     header: align(center)[
       #let svg-h = 5mm // logo height
       #if bg == white {
-        image("../assets/logo/pigmentpedia-logo.png", height: svg-h); v(3mm)
+        image("../assets/logo/pigmentpedia-logo.png", height: svg-h); v(4mm)
       } else {
-        text(11pt, pad(y: 3mm, pgmt-page-list-heading))
+        text(11pt, pad(y: 4mm, pgmt-page-list-heading))
       }
     ],
   )
@@ -85,7 +85,7 @@
 #let get-pgmt-group-name(scope, depth: pigmentpedia, l: none, r: none, bg: white) = {
   for (a, b) in depth {
     if b == scope {
-      pigment(get-contrast-color(bg))[#l #strong(a) #r]
+      [#l #pigment(get-contrast-color(bg),strong(a)) #r]
     } else if type(b) == "dictionary" {
       get-pgmt-group-name(scope, depth: b, l: l, r: r, bg: bg)
     }
