@@ -14,5 +14,5 @@
 #import "src/pigments.typ": *
 #import "src/display.typ": view-pigments
 #import "src/search.typ": find-pigment
-#import "src/show-tree.typ": show-pigmentpedia-tree
+#import "src/show-tree.typ": print-pgmt-tree
 #import "src/pigment-playground.typ": pigment-playground
