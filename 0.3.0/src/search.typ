@@ -1,7 +1,7 @@
 /*
   File: search.typ
   Author: neuralpain
-  Date Modified: 2025-01-11
+  Date Modified: 2025-01-12
 
   Description: Search logic for Pigmentpedia.
 */
@@ -9,7 +9,7 @@
 #import "private.typ": *
 #import "pigments.typ": *
 
-/// Search logic for `pigmentpedia`.
+/// Search logic for Pigmentpedia.
 ///
 /// - key (str): Your search string.
 /// - pgmt-scope (dictionary): The pigment list to search within.
@@ -93,7 +93,7 @@
   }
 }
 
-/// Search for pigments in `pigmentpedia`.
+/// Search for pigments in Pigmentpedia.
 ///
 /// - key (str): Partial name or HEX value to search for.
 /// - scope (dictionary): Pigment group to search within.
@@ -102,7 +102,12 @@
 ///   the background color.
 /// -> content
 #let find-pigment(key, scope: none, bg: white) = {
-  // searching through `pigmentpedia` on `scope` will break the search.
+  if type(key) != "string" {
+    pgmt-error.key-not-str
+    return
+  }
+
+  // searching through Pigmentpedia on `scope` will break the search.
   if scope == pigmentpedia {
     // perform a standard search and exit the function.
     find-pigment(key)
