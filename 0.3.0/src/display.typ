@@ -1,7 +1,7 @@
 /*
   File: display.typ
   Author: neuralpain
-  Date Modified: 2025-01-11
+  Date Modified: 2025-01-12
 
   Description: Module for collecting and
   displaying pigments to the user.
@@ -123,6 +123,11 @@
 ///   the background color.
 /// -> content
 #let view-pigments(scope, bg: white) = {
+  if type(bg) != "color" {
+    pgmt-error.bg-not-a-color
+    return
+  }
+
   // catch any pigments entered by the user
   // this is an anticipated user error turned feature
   if type(scope) == "color" {
@@ -132,11 +137,6 @@
 
   if type(scope) != "dictionary" {
     pgmt-error.not-a-pgmt-group
-    return
-  }
-
-  if type(bg) != "color" {
-    pgmt-error.bg-not-a-color
     return
   }
 
