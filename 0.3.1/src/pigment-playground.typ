@@ -1,7 +1,7 @@
 /*
   File: pigment-playground.typ
   Author: neuralpain
-  Date Modified: 2025-01-11
+  Date Modified: 2025-01-13
 
   Description: A sample document to test pigments.
 */
@@ -119,7 +119,7 @@
   #pigment(section-3-text, lorem(35))
 
   #align(bottom)[
-    #line(length: 100%, stroke: 0.2pt + gray)
+    #line(length: 100%, stroke: 0.2pt + get-contrast-color(bg))
     #emph(
       pigment(footer-text)[
         This is a sample document showcasing the use of Pigmentpedia in text application. The pigments in Pigmentpedia are not solely for text; they can be used anywhere you need a more diverse range of color in your documentation.
