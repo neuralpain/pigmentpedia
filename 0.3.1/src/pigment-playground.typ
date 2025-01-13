@@ -1,11 +1,12 @@
 /*
   File: pigment-playground.typ
   Author: neuralpain
-  Date Modified: 2025-01-08
+  Date Modified: 2025-01-11
 
   Description: A sample document to test pigments.
 */
 
+#import "private.typ": pgmt-icon, pgmt-logo, pgmt-icon-svg, pgmt-logo-svg
 #import "pigments.typ": pigment
 #import "text-contrast.typ": get-contrast-color
 
@@ -83,13 +84,12 @@
 
   #set page(
     fill: bg,
-    header: place(right, dx:15mm, dy:10mm)[
+    header: place(right, dx: 15mm, dy: 10mm)[
       #let svg-h = 10mm
-      #let ccl = get-contrast-color(bg).to-hex() // contrast color logo
-      #if ccl == black.to-hex() {
-        image("../assets/logo/pigmentpedia-icon-black.svg", height: svg-h)
-      } else if ccl == white.to-hex() {
-        image("../assets/logo/pigmentpedia-icon-white.svg", height: svg-h)
+      #if bg == white {
+        image(pgmt-icon-svg, height: svg-h)
+      } else {
+        image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
       }
     ],
   )
