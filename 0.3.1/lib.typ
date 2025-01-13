@@ -16,8 +16,3 @@
 #import "src/search.typ": find-pigment
 #import "src/show-tree.typ": show-pigmentpedia-tree
 #import "src/pigment-playground.typ": pigment-playground
-
-#let pgmt = (
-  show-all: view-pigments(pigmentpedia),
-  tree: show-pigmentpedia-tree()
-)
