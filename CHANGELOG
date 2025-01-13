@@ -1,5 +1,14 @@
 CHANGELOG
 
+0.3.1
+
+- Removed `pgmt` dictionary at `lib.typ` causing major processing issues.
+- Fix issue with `find-pigment()` reading formatting data when searching by HEX values.
+- Fix contrast color with search results background.
+- Improve error handling.
+- Update documentation.
+- Other minor improvements.
+
 0.3.0
 
 - Fix issue with scoped search.
