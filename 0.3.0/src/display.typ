@@ -1,7 +1,7 @@
 /*
   File: display.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-01-11
 
   Description: Module for collecting and
   displaying pigments to the user.
@@ -34,22 +34,31 @@
         footer: align(center)[
           #let svg-h = 5mm // logo height
           #if bg == white {
-            image(pgmt-icon-svg, height: svg-h)
+            image("../assets/logo/pigmentpedia-icon.svg", height: svg-h)
           } else {
-            image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
+            // converting to hex string because the return value is a Luma color
+            let ccl = get-contrast-color(bg).to-hex() // contrast color logo
+            if ccl == black.to-hex() {
+              image("../assets/logo/pigmentpedia-icon-black.svg", height: svg-h)
+            } else if ccl == white.to-hex() {
+              image("../assets/logo/pigmentpedia-icon-white.svg", height: svg-h)
+            }
           }
         ],
       )
-
-      align(center + horizon)[
-        #rect(
-          height: 60%,
-          width: 80%,
-          radius: 25pt,
-          fill: color,
-          text(fill: get-contrast-color(color), size: 4em, weight: "bold", raw(upper(color.to-hex()))),
-        )
-      ]
+      if type(color) != "color" {
+        pgmt-error.not-a-color
+      } else {
+        align(center + horizon)[
+          #rect(
+            height: 60%,
+            width: 80%,
+            radius: 25pt,
+            fill: color,
+            text(fill: get-contrast-color(color), size: 4em, weight: "bold", raw(upper(color.to-hex()))),
+          )
+        ]
+      }
     },
   )
 }
@@ -107,14 +116,14 @@
 /// Show a visual list of colors to select from.
 ///
 /// ```typ
-/// #view-pigments(ncs)
-/// #view-pigments(zhongguo.en)
+/// #view-pigments(NCS)
+/// #view-pigments(Zhongguo.en)
 /// ```
 ///
 /// Display a single pigment on a page.
 ///
 /// ```typ
-/// #view-pigments(zhongguo.en.blue.violet-blue)
+/// #view-pigments(Zhongguo.en.Blue.Violet-Blue)
 /// ```
 ///
 /// - scope (dictionary, color): Pigment group or color to display.
@@ -123,26 +132,21 @@
 ///   the background color.
 /// -> content
 #let view-pigments(scope, bg: white) = {
-  if type(bg) != "color" {
-    pgmt-error.bg-not-a-color
-    return
-  }
-
-  // catch any pigments entered by the user
-  // this is an anticipated user error turned feature
-  if type(scope) == "color" {
-    view-pigment(scope, bg: bg)
-    return
-  }
-
-  if type(scope) != "dictionary" {
-    pgmt-error.not-a-pgmt-group
-    return
-  }
-
   pgmt-page-setup(
     bg: bg,
     {
+      // catch any pigments entered by the user
+      // this is an anticipated user error turned feature
+      if type(scope) == "color" {
+        view-pigment(scope, bg: bg)
+        return
+      }
+
+      if type(scope) != "dictionary" {
+        pgmt-error.not-a-pgmt-group
+        return
+      }
+
       set page(columns: 3)
 
       if scope != pigmentpedia {

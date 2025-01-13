@@ -1,7 +1,7 @@
 /*
   File: private.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-01-11
 
   Description: Private functions shared by
   multiple modules, not accessible to the end
@@ -15,32 +15,11 @@
   #link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")
 ]
 
-#let pgmt-page-text-size = 16pt
-
 // color viewbox settings
 #let colorbox = (radius: 100%, width: 100%, height: 1em)
 #let colorbox-block-properties = (inset: 1em, radius: 10pt, width: 100%, spacing: 8mm)
 
-
-#let pgmt-logo-svg = "../assets/logo/pigmentpedia-logo.svg"
-#let pgmt-icon-svg = "../assets/logo/pigmentpedia-icon.svg"
-
-#let pgmt-logo(color) = {
-  let icon = read(pgmt-logo-svg)
-  icon.replace("#df4d4d", color.to-hex()).replace("#f5bb00", color.to-hex())
-}
-
-#let pgmt-icon(color) = {
-  let icon = read(pgmt-icon-svg)
-  icon.replace("#df4d4d", color.to-hex()).replace("#f5bb00", color.to-hex())
-}
-
-#let pgmt-icon-error = {
-  let icon = read(pgmt-icon-svg)
-  icon.replace("fill-opacity:1;", "fill-opacity:0;")
-}
-
-// page setup for Pigmentpedia view
+// page setup for `pigmentpedia` view
 #let pigmentpage = (
   paper: "a4",
   margin: (x: 1cm, top: 3cm, bottom: 2cm),
@@ -61,9 +40,11 @@
   length: 100%,
 )
 
-/// Page setup for Pigmentpedia
+#let pgmt-page-text-size = 16pt
+
+/// Page setup for `pigmentpedia`
 ///
-/// - body (content): Pigmentpedia pages data
+/// - body (content): `pigmentpedia` pages data
 /// - bg (color): The color of the page background. This is
 ///   used to choose a contrast color for the text based on
 ///   the background color.
@@ -74,10 +55,10 @@
     fill: bg,
     header: align(center)[
       #if bg == white {
-        image(pgmt-logo-svg, height: 5mm)
+        image("../assets/logo/pigmentpedia-logo.png", height: 5mm)
         v(4mm)
       } else {
-        image.decode(pgmt-logo(get-contrast-color(bg)), height: 5mm)
+        text(11pt, pad(y: 4mm, pgmt-page-list-heading))
       }
     ],
   )
@@ -247,32 +228,22 @@
 }
 
 /*
-  Error messages for Pigmentpedia
+  Error messages for pigmentpedia
 */
 
-#let error-head = {
-  image.decode(pgmt-icon-error, height: 50mm)
+#let error-img = {
+  image("../assets/logo/pigmentpedia-icon.svg", height: 50mm)
   text(pgmt-page-text-size, red)[
-    `Error!` \ \
+    `Error:` \ \
   ]
 }
 
 #let pgmt-error = (
-  key-not-str: {
-    align(center + horizon)[
-      #error-head
-      #text(pgmt-page-text-size, red)[
-        `Search must be a string.`
-
-        `Other data types are not accepted.`
-      ]
-    ]
-  },
   not-a-color: {
     align(center + horizon)[
-      #error-head
+      #error-img
       #text(pgmt-page-text-size, red)[
-        `Item is not a color.`
+        `Not a color.`
 
         `Use 'view-pigments()'` \
         `for pigment groups.`
@@ -284,7 +255,7 @@
   },
   bg-not-a-color: {
     align(center + horizon)[
-      #error-head
+      #error-img
       #text(pgmt-page-text-size, red)[
         `'bg' is not a color.`
 
@@ -299,7 +270,7 @@
   scope-is-color: {
     set page(fill: white)
     align(center + horizon)[
-      #error-head
+      #error-img
       #text(pgmt-page-text-size, red)[
         `'scope' cannot be a color.`
 
@@ -311,7 +282,7 @@
   not-a-pgmt-group: {
     set page(fill: white)
     align(center + horizon)[
-      #error-head
+      #error-img
       #text(pgmt-page-text-size, red)[
         `The selected item` \
         `is not a pigment group.`

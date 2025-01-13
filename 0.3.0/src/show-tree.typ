@@ -1,7 +1,7 @@
 /*
   File: show-tree.typ
   Author: neuralpain
-  Date Modified: 2025-01-11
+  Date Modified: 2025-01-07
 
   Description: Display Pigmentpedia ASCII tree.
 */
@@ -9,74 +9,74 @@
 /// Display the structure of `pigmentpedia` in ASCII format.
 ///
 /// -> content
-#let print-pgmt-tree = {
+#let show-pigmentpedia-tree() = {
   set page(
     columns: 2,
     margin: (top: 20mm, bottom: 12mm, x: 25mm),
     height: 12in,
     width: 8.5in,
-    header: align(center)[`Pigmentpedia ASCII tree` \ ],
+    header: align(center)[`pigmentpedia ASCII tree` \ ],
     footer: align(center)[#text(9pt, `https://typst.app/universe/package/pigmentpedia`)],
   )
   set text(12.5pt, black)
   v(5mm)
-  raw("This is a flat ASCII tree representation of the structure of Pigmentpedia.
+  raw("This is a flat ASCII tree representation of the structure of pigmentpedia.
 
 If a top-level group contains a \".\", it means that some or all pigments can be accessed at the base level of the pigment group.
 
-css
+CSS
 └── .
 
-pantone
-├── c
+Pantone
+├── C
 │   ├── .
-│   ├── gray
-│   └── grey
-├── cp
-├── pms
+│   ├── Gray
+│   └── Grey
+├── CP
+├── PMS
 │   ├── .
-│   ├── process
-│   ├── hexachrome
-│   ├── gray
-│   ├── grey
-│   ├── metallic
-│   ├── pastel
-│   └── skintone
-├── u
-├── up
-└── xgc
+│   ├── Process
+│   ├── Hexachrome
+│   ├── Gray
+│   ├── Grey
+│   ├── Metallic
+│   ├── Pastel
+│   └── SkinTone
+├── U
+├── UP
+└── XGC
 
-dic
-├── cg-vol-1
-├── cg-vol-2
-├── tc-japan
-├── tc-france
-└── tc-china
+DIC
+├── CG-Vol1
+├── CG-Vol2
+├── TC-Japan
+├── TC-France
+└── TC-China
 
-ral
-├── classic (Named Colors)
-├── design
-└── effect
+RAL
+├── Classic (Named colors)
+├── Design
+└── Effect
 
-ral-classic (Coded Colors)
+RAL-Classic (Coded colors)
 └── .
 
-hks
+HKS
 └── .
 
-iscc-nbs
+ISCC-NBS
 └── .
 
-ncs
+NCS
 └── .
 
-catppuccin
-├── latte
-├── frappe
-├── macchiato
-└── mocha
+Catppuccin
+├── Latte
+├── Frappe
+├── Macchiato
+└── Mocha
 
-zhongguo
+Zhongguo
 ├── zh
 │   ├── 红
 │   ├── 黄
@@ -98,29 +98,29 @@ zhongguo
 │   ├── hei
 │   └── jinyin
 └── en
-    ├── red
-    ├── yellow
-    ├── green
-    ├── blue
-    ├── pastel
-    ├── aqua
-    ├── grey-white
-    ├── black
-    └── gold-silver
+    ├── Red
+    ├── Yellow
+    ├── Green
+    ├── Blue
+    ├── Pastel
+    ├── Aqua
+    ├── Grey-White
+    ├── Black
+    └── Gold-Silver
 
-nippon
+Nippon
 ├── jp
 └── romaji
 
-nippon-paint
+Nippon-Paint
 └── .
 
-nord
+Nord
 └── .
 
-crayola
-├── standard
-│   └── metallic
-└── fluorescent
+Crayola
+├── Standard
+│   └── Metallic
+└── Fluorescent
 ")
 }
