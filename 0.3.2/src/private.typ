@@ -1,7 +1,7 @@
 /*
   File: private.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-04-20
 
   Description: Private functions shared by
   multiple modules, not accessible to the end
@@ -78,7 +78,7 @@
         image(pgmt-logo-svg, height: 5mm)
         v(4mm)
       } else {
-        image.decode(pgmt-logo(get-contrast-color(bg)), height: 5mm)
+        image(bytes(pgmt-logo(get-contrast-color(bg))), height: 5mm)
       }
     ],
   )
@@ -252,7 +252,7 @@
 */
 
 #let error-head(color: none) = {
-  image.decode(pgmt-icon-error(color: color), height: 50mm)
+  image(bytes(pgmt-icon-error(color: color)), height: 50mm)
   text(pgmt-page-text-size, if color == none { red } else { color })[
     `Error!` \ \
   ]

@@ -1,7 +1,7 @@
 /*
   File: pigment-playground.typ
   Author: neuralpain
-  Date Modified: 2025-01-13
+  Date Modified: 2025-04-20
 
   Description: A sample document to test pigments.
 */
@@ -89,7 +89,7 @@
       #if bg == white {
         image(pgmt-icon-svg, height: svg-h)
       } else {
-        image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
+        image(bytes(pgmt-icon(get-contrast-color(bg))), height: svg-h)
       }
     ],
   )

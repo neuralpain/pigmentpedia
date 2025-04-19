@@ -1,7 +1,7 @@
 /*
   File: display.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-04-20
 
   Description: Module for collecting and
   displaying pigments to the user.
@@ -36,7 +36,7 @@
           #if bg == white {
             image(pgmt-icon-svg, height: svg-h)
           } else {
-            image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
+            image(bytes(pgmt-icon(get-contrast-color(bg))), height: svg-h)
           }
         ],
       )
