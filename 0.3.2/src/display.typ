@@ -54,19 +54,19 @@
   )
 }
 
-/// Search through the `scope` to find the color to pigment
-/// to display for the user.
+/// Collect pigments to display to the user.
 ///
-/// - pgmt-group (dictionary): The pigment group to search from.
+/// - pgmt-group (dictionary): The pigment group or scope to search within.
+/// - bg (color): Page background color.
 /// -> content
-#let display-pigments(pgmt-group, bg) = {
+#let display-pigments-from(pgmt-group, bg) = {
   // pigment name formatting
-  let output-caps = false
+  let output-caps   = false
   let output-hyphen = false
 
   for (name, color) in pgmt-group {
     if name == "output" {
-      output-caps = color.caps
+      output-caps   = color.caps
       output-hyphen = color.hyphen
       continue
     }
@@ -99,7 +99,7 @@
           ),
         ),
       )
-      display-pigments(color, bg)
+      display-pigments-from(color, bg)
     }
   }
 }
@@ -118,9 +118,7 @@
 /// ```
 ///
 /// - scope (dictionary, color): Pigment group or color to display.
-/// - bg (color): The color of the page background. This is
-///   used to choose a contrast color for the text based on
-///   the background color.
+/// - bg (color): Page background color. Default is white.
 /// -> content
 #let view-pigments(scope, bg: white) = {
   if type(bg) != color {
@@ -129,7 +127,6 @@
   }
 
   // catch any pigments entered by the user
-  // this is an anticipated user error turned feature
   if type(scope) == color {
     view-pigment(scope, bg: bg)
     return
@@ -159,7 +156,7 @@
         )
       }
 
-      display-pigments(scope, bg)
+      display-pigments-from(scope, bg)
     },
   )
 }

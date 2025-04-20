@@ -12,34 +12,34 @@
 
 /// Test out pigments with a sample document.
 ///
-/// - bg (color): Background color of the page.
-/// - default-text-color (color): Apply one color to all text.
-/// - title (color): Color of the title text.
-/// - section-1 (color): Color of the first section of text.
-/// - section-1-heading (color): Color of the header of the first section of text.
-/// - section-1-text (color): Color of the text in the first section.
-/// - section-2 (color): Color of the second section of text.
-/// - section-2-heading (color): Color of the header of the second section of text.
-/// - section-2-text (color): Color of the text in the second section.
-/// - section-3 (color): Color of the third section of text.
-/// - section-3-heading (color): Color of the header of the third section of text.
-/// - section-3-text (color): Color of the text in the third section.
-/// - footer-text (color): Color of the footer text.
+/// - bg                 (color) : Page background color.
+/// - default-text-color (color) : Apply one color to all text.
+/// - title              (color) : Color of the title text.
+/// - section-1          (color) : Color of the first section of text.
+/// - section-1-heading  (color) : Color of the header of the first section of text.
+/// - section-1-text     (color) : Color of the text in the first section.
+/// - section-2          (color) : Color of the second section of text.
+/// - section-2-heading  (color) : Color of the header of the second section of text.
+/// - section-2-text     (color) : Color of the text in the second section.
+/// - section-3          (color) : Color of the third section of text.
+/// - section-3-heading  (color) : Color of the header of the third section of text.
+/// - section-3-text     (color) : Color of the text in the third section.
+/// - footer-text        (color) : Color of the footer text.
 /// -> content
 #let pigment-playground(
-  bg: auto,
-  default-text-color: none,
-  title: none,
-  section-1: none,
-  section-1-heading: none,
-  section-1-text: none,
-  section-2: none,
-  section-2-heading: none,
-  section-2-text: none,
-  section-3: none,
-  section-3-heading: none,
-  section-3-text: none,
-  footer-text: none,
+  bg                 : auto,
+  default-text-color : none,
+  title              : none,
+  section-1          : none,
+  section-1-heading  : none,
+  section-1-text     : none,
+  section-2          : none,
+  section-2-heading  : none,
+  section-2-text     : none,
+  section-3          : none,
+  section-3-heading  : none,
+  section-3-text     : none,
+  footer-text        : none,
 ) = [
   #if bg == auto and default-text-color != none {
     bg = get-contrast-color(default-text-color)
@@ -49,38 +49,38 @@
 
   #if section-1 != none {
     section-1-heading = section-1
-    section-1-text = section-1
+    section-1-text    = section-1
   }
 
   #if section-2 != none {
     section-2-heading = section-2
-    section-2-text = section-2
+    section-2-text    = section-2
   }
 
   #if section-3 != none {
     section-3-heading = section-3
-    section-3-text = section-3
+    section-3-text    = section-3
   }
 
   #if default-text-color != none {
-    if title == none { title = default-text-color }
+    if title             == none { title             = default-text-color }
     if section-1-heading == none { section-1-heading = default-text-color }
-    if section-1-text == none { section-1-text = default-text-color }
+    if section-1-text    == none { section-1-text    = default-text-color }
     if section-2-heading == none { section-2-heading = default-text-color }
-    if section-2-text == none { section-2-text = default-text-color }
+    if section-2-text    == none { section-2-text    = default-text-color }
     if section-3-heading == none { section-3-heading = default-text-color }
-    if section-3-text == none { section-3-text = default-text-color }
-    if footer-text == none { footer-text = default-text-color }
+    if section-3-text    == none { section-3-text    = default-text-color }
+    if footer-text       == none { footer-text       = default-text-color }
   }
 
-  #if title == none { title = get-contrast-color(bg) }
-  #if section-1-heading == none { section-1-heading = get-contrast-color(bg) }
-  #if section-1-text == none { section-1-text = get-contrast-color(bg) }
-  #if section-2-heading == none { section-2-heading = get-contrast-color(bg) }
-  #if section-2-text == none { section-2-text = get-contrast-color(bg) }
-  #if section-3-heading == none { section-3-heading = get-contrast-color(bg) }
-  #if section-3-text == none { section-3-text = get-contrast-color(bg) }
-  #if footer-text == none { footer-text = get-contrast-color(bg) }
+  #if title              == none { title             = get-contrast-color(bg) }
+  #if section-1-heading  == none { section-1-heading = get-contrast-color(bg) }
+  #if section-1-text     == none { section-1-text    = get-contrast-color(bg) }
+  #if section-2-heading  == none { section-2-heading = get-contrast-color(bg) }
+  #if section-2-text     == none { section-2-text    = get-contrast-color(bg) }
+  #if section-3-heading  == none { section-3-heading = get-contrast-color(bg) }
+  #if section-3-text     == none { section-3-text    = get-contrast-color(bg) }
+  #if footer-text        == none { footer-text       = get-contrast-color(bg) }
 
   #set page(
     fill: bg,

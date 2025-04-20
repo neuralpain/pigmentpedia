@@ -11,10 +11,7 @@
 #import "pigments.typ": *
 #import "text-contrast.typ": get-contrast-color
 
-#let pgmt-page-list-heading = [
-  #link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")
-]
-
+#let pgmt-page-list-heading = [#link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")]
 #let pgmt-page-text-size = 16pt
 
 // color viewbox settings
@@ -55,19 +52,14 @@
 )
 
 #let group-divider-line = (
-  stroke: (
-    thickness: 1pt,
-    paint: gradient.linear(..color.map.rainbow),
-  ),
+  stroke: (thickness: 1pt, paint: gradient.linear(..color.map.rainbow)),
   length: 100%,
 )
 
 /// Page setup for Pigmentpedia
 ///
 /// - body (content): Pigmentpedia pages data
-/// - bg (color): The color of the page background. This is
-///   used to choose a contrast color for the text based on
-///   the background color.
+/// - bg (color): Page background color. Default is white.
 /// -> content
 #let pgmt-page-setup(body, bg: white) = {
   set page(
@@ -176,9 +168,7 @@
 ///   pigment group name.
 /// - r (str): Text to place on the right side of the
 ///   pigment group name.
-/// - bg (color): The color of the page background. This is
-///   used to choose a contrast color for the text based on
-///   the background color.
+/// - bg (color): Page background color. Default is white.
 /// -> content
 #let get-pgmt-group-name(scope, depth: pigmentpedia, l: none, r: none, bg: white) = {
   for (a, b) in depth {
@@ -213,9 +203,9 @@
 /// - char_str (str): The string to process.
 /// -> str
 #let convert-caps-each-word(char_str) = {
-  let cnv-str = ""
   char_str = char_str.split("-")
 
+  let cnv-str = ""
   for word in char_str {
     cnv-str += cap-first-letter(word) + " "
   }

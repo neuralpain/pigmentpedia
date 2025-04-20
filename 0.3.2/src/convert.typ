@@ -1,13 +1,13 @@
 /*
   File: convert.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-04-20
 
   Description: Module for converting colors from
   HEX to decimal and RGB.
 */
 
-/// Converts a color to `HEX` string.
+/// Convert a color value to `HEX` string.
 ///
 /// - c (color): Color to convert.
 /// -> str
@@ -19,7 +19,7 @@
   }
 }
 
-/// Converts `HEX` pairs to decimal for `RGB`.
+/// Convert individual `HEX` channel pairs to decimal numbers representing `RGB`.
 ///
 /// - hex-str (str): `HEX` string to convert.
 /// -> int
@@ -36,36 +36,35 @@
     } else if "A".to-unicode() <= hex-value.to-unicode() and hex-value.to-unicode() <= "F".to-unicode() {
       decimal-value += (hex-value.to-unicode() - "A".to-unicode() + 10) * calc.pow(16, power)
     }
-    // increase power factor for next position
-    power += 1
+    power += 1  // increase power factor for next position
   }
 
   return decimal-value
 }
 
-/// Converts the decimal value of the color into `RGB`.
+/// Convert the decimal value of the color into `RGB`.
 ///
 /// - color (color): Color to convert.
 /// -> color
-#let dec-to-rgb(color) = {
-  let hxa = (0, 0, 0) // hex-rgb array
-  let hxp-index = 0 // hex pair index count
-  let rgb-index = 0 // hex-rgb array index
-  let hxp-value = "" // hex pair value
+#let get-rgb-array(_color) = {
+  let rgb-array = (0, 0, 0) // hex-rgb array
+  let hex-pair-index = 0    // hex pair index count
+  let rgb-index = 0         // hex-rgb array index
+  let hex-pair-value = ""   // hex pair value
 
-  color = color-to-hex(color)
+  let hex-color = color-to-hex(_color)
 
-  for i in color {
-    if hxp-index == 2 {
-      hxa.at(rgb-index) = hex-to-dec(hxp-value) // add hex pair to current RGB index
-      rgb-index += 1 // move to next channel R/G/B
-      hxp-index = 0 // reset
-      hxp-value = "" // reset
+  for i in hex-color {
+    if hex-pair-index == 2 {
+      rgb-array.at(rgb-index) = hex-to-dec(hex-pair-value) // add hex pair to current RGB index
+      rgb-index += 1        // move to next R/G/B channel
+      hex-pair-index  = 0   // reset
+      hex-pair-value  = ""  // reset
     } else {
-      hxp-value += str(i) // collect HEX pairs
-      hxp-index += 1 // next value in hex pair
+      hex-pair-value += str(i)  // collect HEX pairs
+      hex-pair-index += 1   // next value in hex pair
     }
   }
 
-  return hxa
+  return rgb-array
 }
