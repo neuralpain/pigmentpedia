@@ -43,7 +43,7 @@ To get started, I recommend experimenting with this example document to help you
 
 View the compiled [example.pdf][example] from the GitHub repository.
 
-<details open>
+<details>
 <summary>View code</summary>
 
 ```typ
