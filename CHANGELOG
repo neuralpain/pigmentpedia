@@ -1,5 +1,12 @@
 CHANGELOG
 
+0.3.2
+
+- `dec-to-rgb` renamed to `get-rgb-array`.
+- Some variables were renamed for more clarity.
+- `.decode` functions removed as per deprecation in Typst 0.13.
+- Other minor code improvements.
+
 0.3.1
 
 - Removed `pgmt` dictionary at `lib.typ` causing major processing issues.
