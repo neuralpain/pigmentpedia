@@ -60,7 +60,7 @@
       output-hyphen = color.hyphen
       continue
     }
-    if type(color) == "dictionary" {
+    if type(color) == dictionary {
       // if the current "color" position is of type `dictionary`,
       // do a recursive search to find more matches
       pgmt-search(
@@ -104,12 +104,12 @@
 ///   the background color.
 /// -> content
 #let find-pigment(key, scope: none, bg: white) = {
-  if type(key) != "string" {
+  if type(key) != str {
     pgmt-error.key-not-str
     return
   }
 
-  if type(bg) != "color" {
+  if type(bg) != color {
     pgmt-error.bg-not-a-color
     return
   }
@@ -121,12 +121,12 @@
     return
   }
 
-  if type(scope) == "color" {
+  if type(scope) == color {
     pgmt-error.scope-is-color
     return
   }
 
-  if scope != none and type(scope) != "dictionary" {
+  if scope != none and type(scope) != dictionary {
     pgmt-error.not-a-pgmt-group
     return
   }
@@ -191,7 +191,7 @@
         ]
       ]
 
-      if type(scope) != "dictionary" {
+      if type(scope) != dictionary {
         for (pgmt-list-name, pgmt-list) in pigmentpedia {
           if pgmt-list-name == "output" { continue }
           if key != "#" and "#" in key {

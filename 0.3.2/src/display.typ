@@ -71,7 +71,7 @@
       continue
     }
 
-    if (type(color) == "color") {
+    if type(color) == color {
       block(
         ..colorbox-block-properties,
         stroke: 2pt + color,
@@ -123,19 +123,19 @@
 ///   the background color.
 /// -> content
 #let view-pigments(scope, bg: white) = {
-  if type(bg) != "color" {
+  if type(bg) != color {
     pgmt-error.bg-not-a-color
     return
   }
 
   // catch any pigments entered by the user
   // this is an anticipated user error turned feature
-  if type(scope) == "color" {
+  if type(scope) == color {
     view-pigment(scope, bg: bg)
     return
   }
 
-  if type(scope) != "dictionary" {
+  if type(scope) != dictionary {
     pgmt-error.not-a-pgmt-group
     return
   }

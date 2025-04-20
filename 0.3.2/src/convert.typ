@@ -9,13 +9,13 @@
 
 /// Converts a color to `HEX` string.
 ///
-/// - color (color): Color to convert.
+/// - c (color): Color to convert.
 /// -> str
-#let color-to-hex(color) = {
-  if type(color) == "color" {
-    return str(color.to-hex()).trim("#")
-  } else if type(color) == "string" {
-    return str(color.trim("#"))
+#let color-to-hex(c) = {
+  if type(c) == color {
+    return str(c.to-hex()).trim("#")
+  } else if type(c) == str {
+    return str(c.trim("#"))
   }
 }
 
@@ -24,7 +24,7 @@
 /// - hex-str (str): `HEX` string to convert.
 /// -> int
 #let hex-to-dec(hex-str) = {
-  if type(hex-str) == "color" { return none } // skip color types
+  if type(hex-str) == color { return none } // skip color types
   let hex-str = upper(hex-str) // convert to uppercase for easier handling
   let decimal-value = 0
   let power = 0

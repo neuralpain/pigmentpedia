@@ -189,7 +189,7 @@
             if x == a { strong(y) }
           }
         ] #r]
-    } else if type(b) == "dictionary" {
+    } else if type(b) == dictionary {
       get-pgmt-group-name(scope, depth: b, l: l, r: r, bg: bg)
     }
   }
