@@ -47,11 +47,7 @@
   margin: (x: 1cm, top: 3cm, bottom: 2cm),
   foreground: none,
   background: none,
-  header: align(center, text(11pt, pad(y: 3mm, pgmt-page-list-heading))),
-  footer: text(
-    11pt,
-    [#h(1fr) Pigment Page #context counter(page).display("1") #h(1fr)],
-  ),
+  // header: align(center, text(11pt, pad(y: 3mm, pgmt-page-list-heading))),
 )
 
 #let group-divider-line = (
@@ -69,7 +65,7 @@
 ///   used to choose a contrast color for the text based on
 ///   the background color.
 /// -> content
-#let pgmt-page-setup(body, bg: white) = {
+#let pgmt-page-setup(body, bg: white, numbering: true) = {
   set page(
     ..pigmentpage,
     fill: bg,
@@ -81,6 +77,20 @@
         image.decode(pgmt-logo(get-contrast-color(bg)), height: 5mm)
       }
     ],
+    footer: {
+      if numbering {
+        text(11pt, [#h(1fr) Pigment Page #context counter(page).display("1") #h(1fr)])
+      } else {
+        align(center)[
+          #let svg-h = 5mm // logo height
+          #if bg == white {
+            image(pgmt-icon-svg, height: svg-h)
+          } else {
+            image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
+          }
+        ]
+      }
+    },
   )
   counter(page).update(1)
   set text(size: pgmt-page-text-size, get-contrast-color(bg), font: "Libertinus Serif")

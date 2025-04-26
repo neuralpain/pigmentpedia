@@ -1,7 +1,7 @@
 /*
   File: pigments.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-01-24
 
   Description: Centralized import of all pigments
   accessible within Pigmentpedia. All pigments
@@ -67,8 +67,14 @@
   "crayola": crayola,
 )
 
-// For inline highlighting or coloring of content.
+// 0.3.x backward compatibility
 #let pigment(pigment, content) = {
+  set text(pigment)
+  content
+}
+
+// For inline highlighting or coloring of content.
+#let p(pigment, content) = {
   set text(pigment)
   content
 }
