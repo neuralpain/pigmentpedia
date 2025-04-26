@@ -64,22 +64,22 @@
   let output-caps   = false
   let output-hyphen = false
 
-  for (name, color) in pgmt-group {
+  for (name, _color) in pgmt-group {
     if name == "output" {
-      output-caps   = color.caps
-      output-hyphen = color.hyphen
+      output-caps   = _color.caps
+      output-hyphen = _color.hyphen
       continue
     }
 
-    if type(color) == color {
+    if type(_color) == color {
       block(
         ..colorbox-block-properties,
-        stroke: 2pt + color,
+        stroke: 2pt + _color,
         stack(
           spacing: 5mm,
-          rect(..colorbox, fill: color),
+          rect(..colorbox, fill: _color),
           format-pigment-name(name, output-caps, output-hyphen),
-          raw(upper(color.to-hex())),
+          raw(upper(_color.to-hex())),
         ),
       )
     } else {
@@ -99,7 +99,7 @@
           ),
         ),
       )
-      display-pigments-from(color, bg)
+      display-pigments-from(_color, bg)
     }
   }
 }
