@@ -2,8 +2,7 @@
 
 ANPA/
 
-test.*
-*.test.*
+*test*
 
 *.url
 *.bak
