@@ -11,7 +11,7 @@
 1. Add Pigmentpedia to your project.
 
    ```typ
-   #import "@preview/pigmentpedia:0.3.2": *
+   #import "@preview/pigmentpedia:0.3.3": *
    ```
 
 2. `watch` your source file (if working offline).
@@ -49,7 +49,7 @@ View the compiled [example.pdf][example] from the GitHub repository.
 ```typ
 // An example document to familiarize yourself with Pigmentpedia
 
-#import "@preview/pigmentpedia:0.3.2": *
+#import "@preview/pigmentpedia:0.3.3": *
 
 #set page(background: rotate(-45deg, text(11em, fill: luma(97%))[EXAMPLE]))
 #show heading: it => [#v(5mm) #it #v(2mm)]
