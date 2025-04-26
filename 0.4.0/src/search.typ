@@ -1,13 +1,29 @@
 /*
   File: search.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-04-20
 
   Description: Search logic for Pigmentpedia.
 */
 
 #import "private.typ": *
 #import "pigments.typ": *
+
+/// Formatting for pigments being displayed
+///
+/// - name (str): Pigment name
+/// - color (color): Pigment color value
+/// -> content
+#let pigment-display-block(name, color) = {
+  block(
+    ..colorbox-block-properties,
+    stroke: 2pt + color,
+    [
+      #rect(..colorbox, fill: color)
+      #name #h(1fr) #raw(upper(color.to-hex()))
+    ],
+  )
+}
 
 /// Search logic for Pigmentpedia.
 ///
@@ -19,7 +35,7 @@
 /// - current-level-name (str, none): The name of the current list.
 /// - is-hex (bool): Decides whether or not user is searching with HEX values.
 /// -> content
-#let pgmt-search(
+#let search-pigments(
   key,
   pgmt-scope,
   current-level: none,
@@ -38,32 +54,20 @@
   // if `none`, search is on the top-most level of the list
   if current-level == none { current-level = pgmt-scope }
 
-  // formatting for pigments being displayed
-  let display-pgmt-block(name, color) = {
-    block(
-      ..colorbox-block-properties,
-      stroke: 2pt + color,
-      [
-        #rect(..colorbox, fill: color)
-        #name #h(1fr) #raw(upper(color.to-hex()))
-      ],
-    )
-  }
-
   // pigment name formatting
-  let output-caps = false
+  let output-caps   = false
   let output-hyphen = false
 
   for (name, color) in current-level {
     if name == "output" {
-      output-caps = color.caps
+      output-caps   = color.caps
       output-hyphen = color.hyphen
       continue
     }
-    if type(color) == "dictionary" {
+    if type(color) == dictionary {
       // if the current "color" position is of type `dictionary`,
       // do a recursive search to find more matches
-      pgmt-search(
+      search-pigments(
         key,
         pgmt-scope,
         upper-level: current-level,
@@ -89,7 +93,7 @@
           current-level-breadcrumbs-displayed = true
         }
 
-        display-pgmt-block(format-pigment-name(name, output-caps, output-hyphen), color)
+        pigment-display-block(format-pigment-name(name, output-caps, output-hyphen), color)
       }
     }
   }
@@ -104,12 +108,12 @@
 ///   the background color.
 /// -> content
 #let find-pigment(key, scope: none, bg: white) = {
-  if type(key) != "string" {
+  if type(key) != str {
     pgmt-error.key-not-str
     return
   }
 
-  if type(bg) != "color" {
+  if type(bg) != color {
     pgmt-error.bg-not-a-color
     return
   }
@@ -121,19 +125,17 @@
     return
   }
 
-  if type(scope) == "color" {
+  if type(scope) == color {
     pgmt-error.scope-is-color
     return
   }
 
-  if scope != none and type(scope) != "dictionary" {
+  if scope != none and type(scope) != dictionary {
     pgmt-error.not-a-pgmt-group
     return
   }
 
-  pgmt-page-setup(
-    bg: bg,
-    {
+  pgmt-page-setup(bg: bg, {
       v(0cm) // small padding from the header
 
       align(center)[
@@ -142,10 +144,10 @@
             [🔍 Find the perfect pigment...]
             return // don't attempt search
           } else if key.len() != 1 and "#" in key {
-            let valid-hex = true
+            let is-valid-hex = true
 
             // local scope copy of `key`
-            let _key = key.trim("#")
+            let key = key.trim("#")
 
             // Value is reset for every input, If `key` is
             // too large, its value will remain `none`,
@@ -153,20 +155,20 @@
             let invalid-hex-symbol = none
 
             // verify the HEX string length is within bounds
-            if _key.len() > 6 {
-              valid-hex = false
+            if key.len() > 6 {
+              is-valid-hex = false
             } else {
-              for i in _key {
+              for i in key {
                 if lower(i) not in "0123456789abcdef" {
-                  valid-hex = false
+                  is-valid-hex = false
                   invalid-hex-symbol = i
                   break
                 }
               }
             }
 
-            if valid-hex {
-              [🔍 Showing results for "`#`#raw(_key)" #get-pgmt-group-name(l: "in", scope, bg: bg)]
+            if is-valid-hex {
+              [🔍 Showing results for "`#`#raw(key)" #get-pgmt-group-name(l: "in", scope, bg: bg)]
             } else if invalid-hex-symbol != none {
               place(center + horizon, dy: -20mm)[
                 #pigment(if bg != white { get-contrast-color(bg) } else { red })[
@@ -180,7 +182,7 @@
                   #error-head(color: if bg != white { get-contrast-color(bg) } else { none })
                   `Invalid HEX code.`
 
-                  `"`#raw(key)`"` \
+                  `"#`#raw(key)`"` \
                   `is too long!`
                 ]
               ]
@@ -191,20 +193,20 @@
         ]
       ]
 
-      if type(scope) != "dictionary" {
+      if type(scope) != dictionary {
         for (pgmt-list-name, pgmt-list) in pigmentpedia {
           if pgmt-list-name == "output" { continue }
           if key != "#" and "#" in key {
-            pgmt-search(key.trim("#"), pgmt-list, current-level-name: pgmt-list-name, is-hex: true, bg: bg)
+            search-pigments(key.trim("#"), pgmt-list, current-level-name: pgmt-list-name, is-hex: true, bg: bg)
           } else {
-            pgmt-search(key, pgmt-list, current-level-name: pgmt-list-name, bg: bg)
+            search-pigments(key, pgmt-list, current-level-name: pgmt-list-name, bg: bg)
           }
         }
       } else {
         if key != "#" and "#" in key {
-          pgmt-search(key.trim("#"), scope, is-hex: true, bg: bg)
+          search-pigments(key.trim("#"), scope, is-hex: true, bg: bg)
         } else {
-          pgmt-search(key, scope, bg: bg)
+          search-pigments(key, scope, bg: bg)
         }
       }
     },

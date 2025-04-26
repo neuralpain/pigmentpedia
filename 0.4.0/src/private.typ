@@ -1,7 +1,7 @@
 /*
   File: private.typ
   Author: neuralpain
-  Date Modified: 2025-01-12
+  Date Modified: 2025-04-20
 
   Description: Private functions shared by
   multiple modules, not accessible to the end
@@ -11,10 +11,7 @@
 #import "pigments.typ": *
 #import "text-contrast.typ": get-contrast-color
 
-#let pgmt-page-list-heading = [
-  #link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")
-]
-
+#let pgmt-page-list-heading = [#link("https://typst.app/universe/package/pigmentpedia","pigmentpedia") by #link("https://github.com/neuralpain","neuralpain")]
 #let pgmt-page-text-size = 16pt
 
 // color viewbox settings
@@ -51,19 +48,14 @@
 )
 
 #let group-divider-line = (
-  stroke: (
-    thickness: 1pt,
-    paint: gradient.linear(..color.map.rainbow),
-  ),
+  stroke: (thickness: 1pt, paint: gradient.linear(..color.map.rainbow)),
   length: 100%,
 )
 
 /// Page setup for Pigmentpedia
 ///
 /// - body (content): Pigmentpedia pages data
-/// - bg (color): The color of the page background. This is
-///   used to choose a contrast color for the text based on
-///   the background color.
+/// - bg (color): Page background color. Default is white.
 /// -> content
 #let pgmt-page-setup(body, bg: white, numbering: true) = {
   set page(
@@ -74,7 +66,7 @@
         image(pgmt-logo-svg, height: 5mm)
         v(4mm)
       } else {
-        image.decode(pgmt-logo(get-contrast-color(bg)), height: 5mm)
+        image(bytes(pgmt-logo(get-contrast-color(bg))), height: 5mm)
       }
     ],
     footer: {
@@ -86,7 +78,7 @@
           #if bg == white {
             image(pgmt-icon-svg, height: svg-h)
           } else {
-            image.decode(pgmt-icon(get-contrast-color(bg)), height: svg-h)
+            image(bytes(pgmt-icon(get-contrast-color(bg))), height: svg-h)
           }
         ]
       }
@@ -186,9 +178,7 @@
 ///   pigment group name.
 /// - r (str): Text to place on the right side of the
 ///   pigment group name.
-/// - bg (color): The color of the page background. This is
-///   used to choose a contrast color for the text based on
-///   the background color.
+/// - bg (color): Page background color. Default is white.
 /// -> content
 #let get-pgmt-group-name(scope, depth: pigmentpedia, l: none, r: none, bg: white) = {
   for (a, b) in depth {
@@ -199,7 +189,7 @@
             if x == a { strong(y) }
           }
         ] #r]
-    } else if type(b) == "dictionary" {
+    } else if type(b) == dictionary {
       get-pgmt-group-name(scope, depth: b, l: l, r: r, bg: bg)
     }
   }
@@ -223,9 +213,9 @@
 /// - char_str (str): The string to process.
 /// -> str
 #let convert-caps-each-word(char_str) = {
-  let cnv-str = ""
   char_str = char_str.split("-")
 
+  let cnv-str = ""
   for word in char_str {
     cnv-str += cap-first-letter(word) + " "
   }
@@ -262,7 +252,7 @@
 */
 
 #let error-head(color: none) = {
-  image.decode(pgmt-icon-error(color: color), height: 50mm)
+  image(bytes(pgmt-icon-error(color: color)), height: 50mm)
   text(pgmt-page-text-size, if color == none { red } else { color })[
     `Error!` \ \
   ]

@@ -1,26 +1,26 @@
 /*
   File: text-contrast.typ
   Author: neuralpain
-  Date Modified: 2025-01-06
+  Date Modified: 2025-04-20
 
   Description: Select the best color for contrast
   based on the background color of the element the
   text is placed on.
 */
 
-#import "convert.typ": dec-to-rgb
+#import "convert.typ": get-rgb-array
 
 /// Get optimal contrast color (black or white) to display text.
 ///
 /// - bg_color (color): Background color the text is placed on.
 /// -> color
 #let get-contrast-color(bg_color) = {
-  let hxa = dec-to-rgb(bg_color) // rgb-esque color array
+  let rgb-array = get-rgb-array(bg_color) // rgb-esque color array
 
   // Convert the hex color to RGB
-  let r = hxa.at(0)
-  let g = hxa.at(1)
-  let b = hxa.at(2)
+  let r = rgb-array.at(0)
+  let g = rgb-array.at(1)
+  let b = rgb-array.at(2)
 
   // Calculate luminance (relative brightness)
   let R = if (r / 255) > 0.03928 { calc.pow(((r + 0.055) / 255), 2.4) } else { (r / 255) / 12.92 }
